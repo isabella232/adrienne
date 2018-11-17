@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import request from 'request';
 import truffleContract from 'truffle-contract';
 import ServiceStorageContract from '../contracts/ServiceStorage.json';
-import EuroCoinContract from '../contracts/EuroCoin.json';
 import EscrowContract from '../contracts/Escrow.json';
 import getWeb3 from '../utils/getWeb3';
 
@@ -16,7 +15,6 @@ class Main extends Component {
             web3: null,
             accounts: null,
             contractService: null,
-            euroCoin: null,
             escrowContract: null,
             bodyType: undefined,
         };
@@ -34,11 +32,6 @@ class Main extends Component {
             const instance = await Contract.deployed();
 
             // Get the contract instance.
-            const ContractCoin = truffleContract(EuroCoinContract);
-            ContractCoin.setProvider(web3.currentProvider);
-            const instanceCoin = await ContractCoin.deployed();
-
-            // Get the contract instance.
             const ContractEscrow = truffleContract(EscrowContract);
             ContractEscrow.setProvider(web3.currentProvider);
             const instanceEscrow = await ContractEscrow.deployed();
@@ -47,7 +40,6 @@ class Main extends Component {
                 web3,
                 accounts,
                 contractService: instance,
-                euroCoin: instanceCoin,
                 escrowContract: instanceEscrow,
             });
         } catch (error) {
