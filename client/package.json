@@ -10,7 +10,6 @@
     },
     "scripts": {
         "postinstall": "check-node-version --node '>= 8.12.0' --npm '>= 6.4.0' --yarn '>= 1.10.0'",
-        "pretest": "npm-check --skip-unused",
         "test": "react-scripts test --env=jsdom --coverage",
         "docs": "./node_modules/.bin/esdoc",
         "start": "react-scripts start",
