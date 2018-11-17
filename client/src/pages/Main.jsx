@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import truffleContract from 'truffle-contract';
 import ServiceStorageContract from '../contracts/ServiceStorage.json';
+import EuroCoinContract from '../contracts/EuroCoin.json';
 import getWeb3 from '../utils/getWeb3';
 
 import './Main.module.css';
@@ -9,7 +10,7 @@ class Main extends Component {
     constructor() {
         super();
         this.state = {
-            web3: null, contractService: null,
+            web3: null, contractService: null, euroCoin: null,
         };
     }
 
@@ -22,7 +23,12 @@ class Main extends Component {
             Contract.setProvider(web3.currentProvider);
             const instance = await Contract.deployed();
 
-            this.setState({ web3, contractService: instance });
+            // Get the contract instance.
+            const ContractCoin = truffleContract(EuroCoinContract);
+            ContractCoin.setProvider(web3.currentProvider);
+            const instanceCoin = await ContractCoin.deployed();
+
+            this.setState({ web3, contractService: instance, euroCoin: instanceCoin });
         } catch (error) {
             console.log('Failed to load web3, accounts, or contract. Check console for details.');
             console.log(error);
@@ -79,6 +85,31 @@ class Main extends Component {
         }
         this.crossSearch(allResults);
         return allResults;
+    }
+
+    /**
+     * transfer coins from one account to another
+     * @param {string} fromAccount the account address
+     * @param {string} toAccount the account address
+     * @param {integer} amount amount of coins to transfer
+     */
+    async proceedPayment(fromAccount, toAccount, amount) {
+        const { web3, euroCoin } = this.state;
+        try {
+            await euroCoin.transfer(toAccount, amount, { from: fromAccount });
+            const paymentFilter = web3.eth.filter('latest');
+            paymentFilter.watch((error, log) => {
+                if (error) {
+                    console.log('An error ocurred!');
+                } else {
+                    console.log('Trnsaction finished!');
+                }
+                console.log(log);
+                paymentFilter.stopWatching();
+            });
+        } catch (error) {
+            //
+        }
     }
 
     render() {
