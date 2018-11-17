@@ -150,7 +150,10 @@ class Main extends Component {
 
                         {/* Input Search Section */}
                         <p className="Search__Title">Area</p>
-                        <input className="Search__Input_FullWidth" placeholder="Address, City" />
+                        <div>
+                            <input className="Search__Input_FullWidth" placeholder="Address, City" />
+                        </div>
+
 
                         {/* Input Extras Section */}
                         <p className="Search__Title">Extras</p>
@@ -166,27 +169,27 @@ class Main extends Component {
                                 </li>
                                 <li className="Extras__Item">
                                     <input className="Extras__Checkbox" type="checkbox" />
-                                    <div className="Extras__Text">Child Seat</div>
+                                    <div className="Extras__Text">Toddler Seat</div>
                                 </li>
                                 <li className="Extras__Item">
                                     <input className="Extras__Checkbox" type="checkbox" />
-                                    <div className="Extras__Text">Child Seat</div>
+                                    <div className="Extras__Text">Camping Table and Chairs</div>
                                 </li>
                                 <li className="Extras__Item">
                                     <input className="Extras__Checkbox" type="checkbox" />
-                                    <div className="Extras__Text">Child Seat</div>
+                                    <div className="Extras__Text">Infant Seat</div>
                                 </li>
                                 <li className="Extras__Item">
                                     <input className="Extras__Checkbox" type="checkbox" />
-                                    <div className="Extras__Text">Child Seat</div>
+                                    <div className="Extras__Text">Wifi Hotspot</div>
                                 </li>
                                 <li className="Extras__Item">
                                     <input className="Extras__Checkbox" type="checkbox" />
-                                    <div className="Extras__Text">Child Seat</div>
+                                    <div className="Extras__Text">Chaffeur</div>
                                 </li>
                                 <li className="Extras__Item">
                                     <input className="Extras__Checkbox" type="checkbox" />
-                                    <div className="Extras__Text">Child Seat</div>
+                                    <div className="Extras__Text">GPS</div>
                                 </li>
                             </ul>
                         </div>

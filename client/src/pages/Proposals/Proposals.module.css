@@ -1,0 +1,55 @@
+.Proposal__Card {
+    height: 220px;
+    padding: 0px 10px;
+    margin: 0px 20px;
+    margin-top: 20px;
+    background-color: #fff;
+}
+
+.Proposal__Title {
+    padding-top: 5px;
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+    width: 100%;
+}
+
+.Proposal__Underline {
+    border: 0.5px solid #d3d3d3;
+}
+
+.Proposal__Image {
+    margin-top: 10px;
+    height: 150px;
+    width: 180px;
+}
+
+.Proposal__Title_Small {
+    font-size: 12px;
+}
+
+.Proposal__CardGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 200px);
+}
+
+.Proposal__CardTitle {
+    font-size: 12px;
+    margin: 0;
+    margin-top: 5px;
+    font-weight: 700;
+}
+
+.Proposal__CardSubtitle {
+    font-size: 12px;
+    margin: 0;
+    margin-top: 5px;
+}
+
+.Proposal__CardInnerGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin-top: 5px;
+}
+
+
