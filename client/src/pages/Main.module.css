@@ -5,7 +5,7 @@ body {
 }
 
 .Search__Container {
-    position: fixed;
+    position: relative;
     max-width: 600px;
     max-height: 570px;
     top: 0;
@@ -16,7 +16,6 @@ body {
     background-color: #F4F1DE;
     vertical-align: middle;
     padding-bottom: 30px;
-    overflow: auto;
 }
 
 .Search__Container_HeightRequest {

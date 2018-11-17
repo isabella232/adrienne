@@ -1,9 +1,13 @@
 .Proposal__Card {
-    height: 220px;
+    height: 240px;
     padding: 0px 10px;
     margin: 0px 20px;
     margin-top: 20px;
     background-color: #fff;
+}
+
+.Proposal__Container {
+    overflow: auto;
 }
 
 .Proposal__Title {
@@ -49,7 +53,24 @@
 .Proposal__CardInnerGrid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    margin-top: 5px;
+    margin-top: 10px;
+    align-items: center;
 }
 
+.Proposal__Icons {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+}
+.Proposal__IconsValue {
+    display: inline-block;
+    margin: 0;
+}
 
+.button__Proposals {
+    background-color: #63B995;
+    float: right;
+    color: #fff;
+    width: 150px;
+    margin-bottom: 10px;
+}

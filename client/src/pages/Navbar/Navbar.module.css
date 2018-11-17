@@ -1,0 +1,10 @@
+.Navbar {
+    position: relative;
+    background-color: #3D405B;
+}
+
+.Navbar__Title {
+    margin: 0px;
+    background-color: #3D405B;
+
+}

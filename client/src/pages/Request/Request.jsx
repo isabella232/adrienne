@@ -3,11 +3,18 @@ import React, { Component } from 'react';
 import '../Main.module.css';
 
 class Request extends Component {
-    // eslint-disable-next-line class-methods-use-this
-    mth() {
-        //
-    }
+    // constructor(props) {
+    //     super(props);
 
+    //     this.state = {
+    //         data: undefined,
+    //     };
+    // }
+
+    componentDidMount() {
+        fetch('/vehicle-body-options')
+            .then(data => console.log(data));
+    }
 
     render() {
         return (
@@ -21,6 +28,7 @@ class Request extends Component {
                             <div>
                                 <select className="Search__Label_FullWidth">
                                     <option className="Search__Option_FullWidth">Body Type</option>
+                                    {/* <option>{this.state.data.description}</option> */}
                                 </select>
                             </div>
                             <div>
