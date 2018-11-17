@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import request from 'request';
 import truffleContract from 'truffle-contract';
 import ServiceStorageContract from '../contracts/ServiceStorage.json';
 import EuroCoinContract from '../contracts/EuroCoin.json';
 import EscrowContract from '../contracts/Escrow.json';
 import getWeb3 from '../utils/getWeb3';
+
 
 import './Main.module.css';
 
@@ -15,9 +17,11 @@ class Main extends Component {
             accounts: null,
             contractService: null,
             euroCoin: null,
-            escrowContract: null
+            escrowContract: null,
+            bodyType: undefined,
         };
     }
+
 
     async componentDidMount() {
         try {
@@ -50,6 +54,20 @@ class Main extends Component {
             console.log('Failed to load web3, accounts, or contract. Check console for details.');
             console.log(error);
         }
+
+        request('http://localhost:3001/vehicle-body-options',
+            (error, response, body) => {
+                const x = JSON.parse(response.body);
+                this.setState({ bodyType: x });
+                console.log(response.body);
+            });
+
+        request('http://localhost:3001/vehicle-extras-options',
+            (error, response, body) => {
+                const x = JSON.parse(response.body);
+                this.setState({ extras: x });
+                console.log(response.body);
+            });
     }
 
     async deepSearch(serviceType, city, street) {
@@ -153,10 +171,26 @@ class Main extends Component {
     }
 
     render() {
+        let bodyTypeOptions = '';
+        if (this.state.bodyType !== undefined) {
+            bodyTypeOptions = this.state.bodyType.map(x => <option key={x.id}>{x.description}</option>);
+        }
+
+        let extraOptions = '';
+        if (this.state.extras !== undefined) {
+            extraOptions = this.state.extras.map(x => (
+                <li key={x.id} className="Extras__Item">
+                    <input className="Extras__Checkbox" type="checkbox" />
+                    <div className="Extras__Text">{x.description}</div>
+                </li>
+            ));
+        }
+
         const { web3 } = this.state;
         if (!web3) {
             return <div>Loading Web3, accounts, and contract...</div>;
         }
+
         return (
             <div>
                 <div className="Search__Container">
@@ -174,6 +208,7 @@ class Main extends Component {
                             <div>
                                 <select className="Search__Label_FullWidth">
                                     <option className="Search__Option_FullWidth">Body Type</option>
+                                    {bodyTypeOptions}
                                 </select>
                             </div>
                             <div>
@@ -199,38 +234,7 @@ class Main extends Component {
                         <p className="Search__Title">Extras</p>
                         <div>
                             <ul className="Search__ExtrasGrid">
-                                <li className="Extras__Item">
-                                    <input className="Extras__Checkbox" type="checkbox" />
-                                    <div className="Extras__Text">Child Seat</div>
-                                </li>
-                                <li className="Extras__Item">
-                                    <input className="Extras__Checkbox" type="checkbox" />
-                                    <div className="Extras__Text">Baby Stroller</div>
-                                </li>
-                                <li className="Extras__Item">
-                                    <input className="Extras__Checkbox" type="checkbox" />
-                                    <div className="Extras__Text">Toddler Seat</div>
-                                </li>
-                                <li className="Extras__Item">
-                                    <input className="Extras__Checkbox" type="checkbox" />
-                                    <div className="Extras__Text">Camping Table and Chairs</div>
-                                </li>
-                                <li className="Extras__Item">
-                                    <input className="Extras__Checkbox" type="checkbox" />
-                                    <div className="Extras__Text">Infant Seat</div>
-                                </li>
-                                <li className="Extras__Item">
-                                    <input className="Extras__Checkbox" type="checkbox" />
-                                    <div className="Extras__Text">Wifi Hotspot</div>
-                                </li>
-                                <li className="Extras__Item">
-                                    <input className="Extras__Checkbox" type="checkbox" />
-                                    <div className="Extras__Text">Chaffeur</div>
-                                </li>
-                                <li className="Extras__Item">
-                                    <input className="Extras__Checkbox" type="checkbox" />
-                                    <div className="Extras__Text">GPS</div>
-                                </li>
+                                {extraOptions}
                             </ul>
                         </div>
 

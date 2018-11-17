@@ -361,6 +361,7 @@ app.get('/vehicle-body-options', (request, response) => {
 app.get('/vehicle-extras-options', (request, response) => {
   mongoDB.db(databaseName).collection("Vehicle_Extras").find().toArray(function(err, docs) {
     var data = docs;
+    console.log(data);
     response.send(data);
   });
 })

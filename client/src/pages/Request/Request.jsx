@@ -1,22 +1,45 @@
 import React, { Component } from 'react';
+import request from 'request';
 
 import '../Main.module.css';
 
 class Request extends Component {
-    // constructor(props) {
-    //     super(props);
-
-    //     this.state = {
-    //         data: undefined,
-    //     };
-    // }
+        state =  {
+            bodyType: undefined,
+            extras: undefined
+        }
 
     componentDidMount() {
-        fetch('/vehicle-body-options')
-            .then(data => console.log(data));
-    }
+        request('http://localhost:3001/vehicle-body-options',
+         (error, response, body) => {
+        const x = JSON.parse(response.body)
+        this.setState({ bodyType: x})
+            console.log(response.body);
+        });
 
+        request('http://localhost:3001/vehicle-extras-options',
+         (error, response, body) => {
+        const x = JSON.parse(response.body)
+        this.setState({ extras: x})
+            console.log(response.body);
+        });
+
+    }
     render() {
+        var bodyTypeOptions = '';
+        if(this.state.bodyType !== undefined ) {
+           bodyTypeOptions = this.state.bodyType.map(x => <option key={x.id}>{x.description}</option> )
+        }
+
+        var extraOptions = '';
+        if(this.state.extras !== undefined ) {
+           extraOptions = this.state.extras.map(x =>
+            <li key={x.id} className="Extras__Item">
+                <input className="Extras__Checkbox" type="checkbox" />
+                <div className="Extras__Text">{x.description}</div>
+            </li> )
+        }
+
         return (
             <div>
                 <div className="Search__Container Search__Container_HeightRequest">
@@ -28,7 +51,7 @@ class Request extends Component {
                             <div>
                                 <select className="Search__Label_FullWidth">
                                     <option className="Search__Option_FullWidth">Body Type</option>
-                                    {/* <option>{this.state.data.description}</option> */}
+                                     {bodyTypeOptions}
                                 </select>
                             </div>
                             <div>
@@ -72,7 +95,8 @@ class Request extends Component {
                         <p className="Search__Title">Extras</p>
                         <div>
                             <ul className="Search__ExtrasGrid">
-                                <li className="Extras__Item">
+                                {extraOptions}
+                                {/* <li className="Extras__Item">
                                     <input className="Extras__Checkbox" type="checkbox" />
                                     <div className="Extras__Text">Child Seat</div>
                                 </li>
@@ -103,7 +127,7 @@ class Request extends Component {
                                 <li className="Extras__Item">
                                     <input className="Extras__Checkbox" type="checkbox" />
                                     <div className="Extras__Text">GPS</div>
-                                </li>
+                                </li> */}
                             </ul>
                         </div>
 
