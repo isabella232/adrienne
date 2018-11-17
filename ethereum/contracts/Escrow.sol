@@ -2,9 +2,11 @@ pragma solidity ^0.4.23;
 
 import "../node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol";
 import "../node_modules/openzeppelin-solidity/contracts/token/ERC20/ERC20.sol";
+import "../node_modules/openzeppelin-solidity/contracts/token/ERC20/SafeERC20.sol";
 
 contract Escrow {
     using SafeMath for uint256;
+    using SafeERC20 for IERC20;
 
     struct Debt {
         bool finished;
@@ -14,16 +16,17 @@ contract Escrow {
 
     mapping(address => Debt[]) private debts;
     address private escrowWallet;
-    ERC20 private erc20;
+    // The token being sold
+    IERC20 private _token;
 
-    constructor(address _escrowWallet, ERC20 _erc20) public {
+    constructor(address _escrowWallet, IERC20 _erc20) public {
         escrowWallet = _escrowWallet;
-        erc20 = _erc20;
+        _token = _erc20;
     }
 
     function escrow(address _to, uint256 _value) public {
         debts[msg.sender].push(Debt(false, _to, _value));
-        erc20.transfer(escrowWallet, _value);
+        _token.transferFrom(msg.sender, escrowWallet, _value);
     }
 
 
@@ -33,7 +36,7 @@ contract Escrow {
 
         for(uint256 a = 0; a < debtArraySize; a ++) {
             if(debt[a].to == _to && debt[a].value == _value) {
-                //erc20._transfer(escrowWallet, _to, _value);
+                _token.transferFrom(escrowWallet, _to, _value);
                 break;
             }
         }

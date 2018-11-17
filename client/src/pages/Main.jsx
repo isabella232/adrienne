@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import truffleContract from 'truffle-contract';
 import ServiceStorageContract from '../contracts/ServiceStorage.json';
 import EuroCoinContract from '../contracts/EuroCoin.json';
+import EscrowContract from '../contracts/Escrow.json';
 import getWeb3 from '../utils/getWeb3';
 
 import './Main.module.css';
@@ -10,13 +11,18 @@ class Main extends Component {
     constructor() {
         super();
         this.state = {
-            web3: null, contractService: null, euroCoin: null,
+            web3: null,
+            accounts: null,
+            contractService: null,
+            euroCoin: null,
+            escrowContract: null
         };
     }
 
     async componentDidMount() {
         try {
             const web3 = await getWeb3();
+            const accounts = await web3.eth.getAccounts();
 
             // Get the contract instance.
             const Contract = truffleContract(ServiceStorageContract);
@@ -28,7 +34,18 @@ class Main extends Component {
             ContractCoin.setProvider(web3.currentProvider);
             const instanceCoin = await ContractCoin.deployed();
 
-            this.setState({ web3, contractService: instance, euroCoin: instanceCoin });
+            // Get the contract instance.
+            const ContractEscrow = truffleContract(EscrowContract);
+            ContractEscrow.setProvider(web3.currentProvider);
+            const instanceEscrow = await ContractEscrow.deployed();
+
+            this.setState({
+                web3,
+                accounts,
+                contractService: instance,
+                euroCoin: instanceCoin,
+                escrowContract: instanceEscrow,
+            });
         } catch (error) {
             console.log('Failed to load web3, accounts, or contract. Check console for details.');
             console.log(error);
@@ -88,21 +105,44 @@ class Main extends Component {
     }
 
     /**
-     * transfer coins from one account to another
-     * @param {string} fromAccount the account address
+     * transfer from user to escrow
      * @param {string} toAccount the account address
      * @param {integer} amount amount of coins to transfer
      */
-    async proceedPayment(fromAccount, toAccount, amount) {
-        const { web3, euroCoin } = this.state;
+    async proceedEscrow(toAccount, amount) {
+        const { web3, accounts, escrowContract } = this.state;
         try {
-            await euroCoin.transfer(toAccount, amount, { from: fromAccount });
+            await escrowContract.escrow(toAccount, amount, { from: accounts[0] });
             const paymentFilter = web3.eth.filter('latest');
             paymentFilter.watch((error, log) => {
                 if (error) {
                     console.log('An error ocurred!');
                 } else {
-                    console.log('Trnsaction finished!');
+                    console.log('In Escrow!');
+                }
+                console.log(log);
+                paymentFilter.stopWatching();
+            });
+        } catch (error) {
+            //
+        }
+    }
+
+    /**
+     * transfer from escrow to final user
+     * @param {string} toAccount the account address
+     * @param {integer} amount amount of coins to transfer
+     */
+    async finishEscrow(toAccount, amount) {
+        const { web3, accounts, escrowContract } = this.state;
+        try {
+            await escrowContract.finish(toAccount, amount, { from: accounts[0] });
+            const paymentFilter = web3.eth.filter('latest');
+            paymentFilter.watch((error, log) => {
+                if (error) {
+                    console.log('An error ocurred!');
+                } else {
+                    console.log('In Escrow!');
                 }
                 console.log(log);
                 paymentFilter.stopWatching();

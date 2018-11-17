@@ -15,7 +15,7 @@ contract EuroCoin is ERC20 {
             * (10 ** uint256(decimals));
 
         for(uint256 a = 0; a < 10; a ++) {
-            _mint(msg.sender, INITIAL_SUPPLY);
+            _mint(accounts[a], INITIAL_SUPPLY);
         }
     }
 }

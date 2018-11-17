@@ -7,10 +7,12 @@ contract('Escrow', (accounts) => {
         const euroCoinInstance = await EuroCoin.deployed();
         const accountFrom = accounts[1];
         const accountTo = accounts[2];
-        const value = 2;
+        const value = web3.toWei(1, 'ether');
 
         const previousBalanceFrom = await euroCoinInstance.balanceOf(accountFrom);
         const previousBalanceTo = await euroCoinInstance.balanceOf(accountTo);
+
+        console.log(previousBalanceFrom.toNumber(), previousBalanceTo.toNumber());
         await escrowInstance.escrow(accountTo, value, { from: accountFrom });
         /* assert.equal(await euroCoinInstance.balanceOf(accountFrom),
             previousBalanceFrom - value, 'Values are different (from)!');
