@@ -21,7 +21,7 @@ MongoClient.connect(url, function(err, database) {
   if (err) throw err;
   console.log("Database created!");
   mongoDB = database;
-  initDatabase();
+  //initDatabase();
   console.log("Database populated with baseline data!");
 });
 
@@ -333,6 +333,11 @@ function initDatabase() {
   ]);
   //mongoDB.close();
 }
+
+app.post('/', (request, response) => {
+    initDatabase();
+    response.send('done');
+})
 
 app.get('/', (request, response) => {
     response.send('hi');
