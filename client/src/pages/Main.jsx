@@ -15,8 +15,13 @@ class Main extends Component {
             web3: null,
             accounts: null,
             contractService: null,
+<<<<<<< Updated upstream
             escrowContract: null,
             bodyType: undefined,
+=======
+            euroCoin: null,
+            escrowContract: null,
+>>>>>>> Stashed changes
         };
     }
 
