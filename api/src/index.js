@@ -112,7 +112,7 @@ function initDatabase() {
             doors: "2",
             fuel: "Petrol",
             driving: "Manual",
-            price: "720",
+            price: "310.13",
             co2: "100",
             shildSeat: "no",
             services:
@@ -138,7 +138,7 @@ function initDatabase() {
             doors: "5",
             fuel: "Diesel",
             driving: "Manual",
-            price: "110",
+            price: "316.52",
             co2: "100",
             shildSeat: "yes",
             services:
@@ -162,7 +162,7 @@ function initDatabase() {
             doors: "5",
             fuel: "Diesel",
             driving: "Manual",
-            price: "98",
+            price: "316.52",
             co2: "100",
             shildSeat: "yes",
             services:
@@ -186,7 +186,7 @@ function initDatabase() {
             doors: "5",
             fuel: "Petrol",
             driving: "Manual",
-            price: "120",
+            price: "292.13",
             co2: "100",
             shildSeat: "yes",
             services:
@@ -212,7 +212,7 @@ function initDatabase() {
             doors: "5",
             fuel: "Electric",
             driving: "Autonomous",
-            price: "310",
+            price: "208.31",
             co2: "0",
             shildSeat: "no",
             services:
@@ -234,7 +234,7 @@ function initDatabase() {
             doors: "5",
             fuel: "Electric",
             driving: "Autonomous",
-            price: "220",
+            price: "248.88",
             co2: "0",
             shildSeat: "no",
             services:
@@ -256,7 +256,7 @@ function initDatabase() {
             doors: "5",
             fuel: "Electric",
             driving: "Autonomous",
-            price: "290",
+            price: "267.63",
             co2: "0",
             shildSeat: "no",
             services:
@@ -281,7 +281,7 @@ function initDatabase() {
             doors: "5",
             fuel: "Diesel",
             driving: "Manual",
-            price: "210",
+            price: "221.52",
             co2: "200",
             shildSeat: "no",
             services:
@@ -304,7 +304,7 @@ function initDatabase() {
             doors: "5",
             fuel: "Diesel",
             driving: "Manual",
-            price: "200",
+            price: "297.77",
             co2: "180",
             shildSeat: "no",
             services:
@@ -327,7 +327,7 @@ function initDatabase() {
             doors: "5",
             fuel: "Diesel",
             driving: "Manual",
-            price: "290",
+            price: "292.13",
             co2: "170",
             shildSeat: "no",
             services:

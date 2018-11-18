@@ -102,15 +102,21 @@ class Vehicle extends Component {
                                 <p className="Proposal__IconsValue">{data.co2}</p>
                             </div>
                         </div>
-
                         <p className="Proposal__MoreDetails" onClick={() => this.toggleHidden()}>More Details ></p>
                     </div>
-                    { this.state.showButtons === true ? (
-                        <div>
-                            <button className="Button Proposal__Button_Finish">FINISH</button>
-                            <button className="Button Proposal__Button_Support">CONTACT SUPPORT</button>
-                        </div>
-                    ) : null}
+                    <div>
+                        <p className="Proposal__CardPrice">
+                            Total Price:
+                            {' '}
+                            {data.price}
+                        </p>
+                        { this.state.showButtons === true ? (
+                            <div>
+                                <button className="Button Proposal__Button_Finish">FINISH</button>
+                                <button className="Button Proposal__Button_Support">CONTACT SUPPORT</button>
+                            </div>
+                        ) : null}
+                    </div>
                 </div>
                 <form onSubmit={this.handleSubmit}>
                     <input type="submit" value="BOOK" className="Button button__Proposals" onClick={() => this.toggleHiddenButton()} />
@@ -127,6 +133,10 @@ class Vehicle extends Component {
                         </div>
 
                         <div>{services}</div>
+                        <div className="Proposal__CardPriceTotal">
+                            <span className="Proposal__CardPriceTotal_Margin">Total: </span>
+                            {data.price}
+                        </div>
 
                     </div>
 

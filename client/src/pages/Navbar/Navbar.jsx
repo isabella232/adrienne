@@ -5,7 +5,7 @@ import getWeb3 from '../../utils/getWeb3';
 
 import './Navbar.module.css';
 
-// import avatarImg from '../../assets/avatar.svg';
+import avatarImg from '../../assets/avatar.svg';
 import Logo from '../../assets/AdrienneLogo.png';
 
 class Navbar extends Component {
@@ -45,13 +45,16 @@ class Navbar extends Component {
                         <img className="Navbar__Logo" src={Logo} alt="logo" />
                     </div>
                     <div>
+                        <p className="Navbar__Title inline">Balance: </p>
                         <p className="Navbar__Title inline">
                             {balance}
                             {' '}
                             COINS
                         </p>
-                        <p className="Navbar__Title inline">Hello User</p>
-                        <p className="Navbar__Title inline">Wallet</p>
+                        <p className="Navbar__Title inline">Hello Alberto</p>
+                        <div className="inline">
+                            <img className="Navbar__Avatar" src="https://cdn1.iconfinder.com/data/icons/user-pictures/100/boy-512.png" alt="avatar" />
+                        </div>
                     </div>
                 </div>
             </div>
