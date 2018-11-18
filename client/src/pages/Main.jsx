@@ -292,7 +292,7 @@ class Main extends Component {
                         {/* Option Service Section */}
                         <p className="Search__Title">Service</p>
                         <select className="Search__Label_FullWidth">
-                            <option className="Search__Option_FullWidth"></option>
+                            <option className="Search__Option_FullWidth">Mobility</option>
                         </select>
 
                         {/* Option Vehicle Section */}

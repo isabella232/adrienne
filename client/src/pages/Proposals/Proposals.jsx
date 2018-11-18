@@ -18,6 +18,7 @@ class Vehicle extends Component {
         super();
         this.state = {
             isHidden: false,
+            showButtons: false,
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -32,6 +33,12 @@ class Vehicle extends Component {
     handleSubmit(event) {
         console.log('A name was submitted: ' + this.state.value);
         event.preventDefault();
+
+    }
+    toggleHiddenButton() {
+        this.setState({
+            showButtons: !this.state.showButtons,
+        });
     }
 
     render() {
@@ -97,11 +104,19 @@ class Vehicle extends Component {
 
                         <p className="Proposal__MoreDetails" onClick={() => this.toggleHidden()}>More Details ></p>
                     </div>
+                    { this.state.showButtons === true ? (
+                        <div>
+                            <button className="Button Proposal__Button_Finish">FINISH</button>
+                            <button className="Button Proposal__Button_Support">CONTACT SUPPORT</button>
+                        </div>
+                    ) : null}
                 </div>
                 <form onSubmit={this.handleSubmit}>
                     <input type="submit" value="Submit" />
                 </form>
                 <button type="button" className="Button button__Proposals">BOOK</button>
+
+                <button type="button" className="Button button__Proposals" onClick={() => this.toggleHiddenButton()}>BOOK</button>
 
                 {this.state.isHidden === true ? (
                     // {/* More Details section */}

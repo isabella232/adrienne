@@ -36,7 +36,7 @@
 
 .Proposal__CardGrid {
     display: grid;
-    grid-template-columns: repeat(2, 200px);
+    grid-template-columns: 200px 140px auto;
 }
 
 .Proposal__CardTitle {
@@ -88,6 +88,27 @@
     color: #fff;
     width: 150px;
     margin-bottom: 10px;
+    font-size: 13px;
+}
+
+.Proposal__Button_Finish {
+    background-color: #E07A5F;
+    color: #fff;
+    width: 150px;
+    font-size: 13px;
+    float: right;
+    margin-top: 20px;
+
+}
+
+.Proposal__Button_Support {
+    background-color: #F2CC8F;
+    font-size: 13px;
+    color: #fff;
+    width: 150px;
+    float: right;
+    margin-top: 20px;
+
 }
 
 .More__Details {
@@ -117,4 +138,5 @@
     width: 100%;
     border: 0.5px solid #d3d3d3;
 }
+
 
