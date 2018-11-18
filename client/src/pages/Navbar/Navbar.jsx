@@ -12,7 +12,8 @@ const Navbar = () => (
                 <img className="Navbar__Logo" src={Logo} alt="logo" />
             </div>
             <div>
-                <div className="Navbar__Avatar">
+                <p className="Navbar__Title inline">Hello User</p>
+                <div className="Navbar__Avatar inline">
                     <img src={avatarImg} alt="avatar" />
                 </div>
             </div>
