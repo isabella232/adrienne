@@ -23,14 +23,14 @@ class Request extends Component {
 
     componentDidMount() {
         request('http://localhost:3001/vehicle-body-options',
-            (error, response, body) => {
+            (error, response) => {
                 const x = JSON.parse(response.body);
                 this.setState({ bodyType: x });
                 console.log(response.body);
             });
 
         request('http://localhost:3001/vehicle-extras-options',
-            (error, response, body) => {
+            (error, response) => {
                 const x = JSON.parse(response.body);
                 this.setState({ extras: x });
                 console.log(response.body);
@@ -50,14 +50,20 @@ class Request extends Component {
     }
 
     render() {
+        const {
+            bodyType,
+            extras,
+            startDate,
+            endDate,
+        } = this.state;
         let bodyTypeOptions = '';
-        if (this.state.bodyType !== undefined) {
-            bodyTypeOptions = this.state.bodyType.map(x => <option key={x.id}>{x.description}</option>);
+        if (bodyType !== undefined) {
+            bodyTypeOptions = bodyType.map(x => <option key={x.id}>{x.description}</option>);
         }
 
         let extraOptions = '';
-        if (this.state.extras !== undefined) {
-            extraOptions = this.state.extras.map(x => (
+        if (extras !== undefined) {
+            extraOptions = extras.map(x => (
                 <li key={x.id} className="Extras__Item">
                     <input className="Extras__Checkbox" type="checkbox" />
                     <div className="Extras__Text">{x.description}</div>
@@ -100,15 +106,15 @@ class Request extends Component {
                             <div className="Search__PickupDateGrid">
                                 <DatePicker
                                     className="Search__PickupDateItem"
-                                    selected={this.state.startDate}
+                                    selected={startDate}
                                     selectsStart
-                                    startDate={this.state.startDate}
-                                    endDate={this.state.endDate}
+                                    startDate={startDate}
+                                    endDate={endDate}
                                     onChange={this.handleChangeStart}
                                 />
                                 <DatePicker
                                     className="Search__PickupDateItem"
-                                    selected={this.state.startDate}
+                                    selected={startDate}
                                     onChange={this.handleChangeStart}
                                     showTimeSelect
                                     showTimeSelectOnly
@@ -129,16 +135,16 @@ class Request extends Component {
                             <div className="Search__PickupDateGrid">
                                 <DatePicker
                                     className="Search__PickupDateItem"
-                                    selected={this.state.endDate}
+                                    selected={endDate}
                                     selectsEnd
-                                    startDate={this.state.startDate}
-                                    endDate={this.state.endDate}
+                                    startDate={startDate}
+                                    endDate={endDate}
                                     onChange={this.handleChangeEnd}
                                 />
 
                                 <DatePicker
                                     className="Search__PickupDateItem"
-                                    selected={this.state.endDate}
+                                    selected={endDate}
                                     onChange={this.handleChangeEnd}
                                     showTimeSelect
                                     showTimeSelectOnly
