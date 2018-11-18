@@ -20,6 +20,7 @@ class Main extends Component {
             escrowContract: null,
             bodyType: undefined,
             vehicleBodyType: 'select',
+            vehicleMake: [],
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -173,6 +174,23 @@ class Main extends Component {
 
     handleChange(event) {
         this.setState({ [event.target.name]: event.target.value });
+        if (event.target.name === 'vehicleBodyType') {
+            request.post({
+                url: 'http://localhost:3001/search-vehicles',
+                form: { type: event.target.value },
+            },
+            (err, httpResponse, body) => {
+                if (httpResponse.statusCode === 200) {
+                    const jsonObject = JSON.parse(body);
+                    const elements = jsonObject.length;
+                    const makes = [];
+                    for (let e = 0; e < elements; e += 1) {
+                        makes.push(jsonObject[e].make);
+                    }
+                    this.setState({ vehicleMake: makes });
+                }
+            });
+        }
     }
 
     handleSubmit(event) {
@@ -202,10 +220,12 @@ class Main extends Component {
             vehicleBodyType,
             bodyType,
             extras,
+            vehicleMake,
         } = this.state;
 
         let bodyTypeOptions = '';
         let extraOptions = '';
+        let vehicleMakeOptions = '';
 
         if (bodyType !== undefined) {
             bodyTypeOptions = bodyType.map(x => <option value={x.id}>{x.description}</option>);
@@ -222,6 +242,10 @@ class Main extends Component {
                     />
                 </li>
             ));
+        }
+
+        if (vehicleMake.length > 0) {
+            vehicleMakeOptions = vehicleMake.map(e => <option>{e}</option>);
         }
 
         if (!web3) {
@@ -256,6 +280,7 @@ class Main extends Component {
                             <div>
                                 <select className="Search__Label_FullWidth">
                                     <option className="Search__Option_FullWidth">Make</option>
+                                    {vehicleMakeOptions}
                                 </select>
                             </div>
                             <div>
