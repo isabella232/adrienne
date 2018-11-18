@@ -17,8 +17,6 @@ class Proposals extends Component {
         //
     }
 
-
-
     render() {
         return (
             <div className="Search__Container Proposal__Container">
@@ -62,12 +60,115 @@ class Proposals extends Component {
                                     <p className="Proposal__IconsValue">5</p>
                                 </div>
                             </div>
-                            <p>More Details ></p>
+                            <p className="Proposal__MoreDetails">More Details ></p>
                         </div>
                     </div>
                     <button type="button" className="Button button__Proposals">BOOK</button>
-                </div>
 
+
+                    {/* More Details section */}
+                    <div className="More__Details">
+                        <div className="More__DetailsGrid">
+                            <div>
+                                <p className="More__DetailsTitle">Service</p>
+                            </div>
+                            <div>
+                                <p className="More__DetailsTitle">Provider</p>
+                            </div>
+                            <div>
+                                <p className="More__DetailsTitle">Cost</p>
+                            </div>
+
+                            {/* RENTAL */}
+                            <div>
+                                <p className="More__DetailsContent">Rental</p>
+                            </div>
+                            <div>
+                                <p className="More__DetailsContent">rentalProvider-dynamic</p>
+                            </div>
+                            <div>
+                                <p className="More__DetailsContent">rentalPrice-dynamic</p>
+                            </div>
+
+                            {/* Delivery */}
+                            <div>
+                                <p className="More__DetailsContent">Delivery</p>
+                            </div>
+                            <div>
+                                <p className="More__DetailsContent">deliveryProvider-dynamic</p>
+                            </div>
+                            <div>
+                                <p className="More__DetailsContent">deliveryPrice-dynamic</p>
+                            </div>
+
+                            {/* Extras */}
+                            <div>
+                                <p className="More__DetailsContent">Extras</p>
+                            </div>
+                            <div>
+                                <p className="More__DetailsContent">extrasProvider-dynamic</p>
+                            </div>
+                            <div>
+                                <p className="More__DetailsContent">extrasPrice-dynamic</p>
+                            </div>
+
+                            {/* Petrol Refill */}
+                            <div>
+                                <p className="More__DetailsContent">Petrol Refill</p>
+                            </div>
+                            <div>
+                                <p className="More__DetailsContent">Petrol RefillProvider-dynamic</p>
+                            </div>
+                            <div>
+                                <p className="More__DetailsContent">Petrol RefillPrice-dynamic</p>
+                            </div>
+
+                            {/* Interior Cleaning */}
+                            <div>
+                                <p className="More__DetailsContent">Interior Cleaning</p>
+                            </div>
+                            <div>
+                                <p className="More__DetailsContent">Interior CleaningProvider-dynamic</p>
+                            </div>
+                            <div>
+                                <p className="More__DetailsContent">Interior CleaningPrice-dynamic</p>
+                            </div>
+
+                            {/* Parking */}
+                            <div>
+                                <p className="More__DetailsContent">Parking</p>
+                            </div>
+                            <div>
+                                <p className="More__DetailsContent">ParkingProvider-dynamic</p>
+                            </div>
+                            <div>
+                                <p className="More__DetailsContent">ParkingPrice-dynamic</p>
+                            </div>
+
+                            {/* Insurance */}
+                            <div>
+                                <p className="More__DetailsContent">Insurance</p>
+                            </div>
+                            <div>
+                                <p className="More__DetailsContent">InsuranceProvider-dynamic</p>
+                            </div>
+                            <div>
+                                <p className="More__DetailsContent">InsurancePrice-dynamic</p>
+                            </div>
+
+                            {/* Insurance */}
+                            <div />
+                            <div>
+                                <p className="More__DetailsTitle">Total</p>
+                            </div>
+                            <div>
+                                <div className="More__DetailsLine" />
+                                <p className="More__DetailsContent">TotalPrice-dynamic</p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
             </div>
         );
     }

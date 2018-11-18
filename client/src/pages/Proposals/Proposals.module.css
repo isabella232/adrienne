@@ -1,9 +1,10 @@
 .Proposal__Card {
-    height: 240px;
+    height: auto;
     padding: 0px 10px;
     margin: 0px 20px;
     margin-top: 20px;
     background-color: #fff;
+    padding-bottom: 20px;
 }
 
 .Proposal__Container {
@@ -30,6 +31,7 @@
 
 .Proposal__Title_Small {
     font-size: 12px;
+    color: #63B995;
 }
 
 .Proposal__CardGrid {
@@ -58,13 +60,26 @@
 }
 
 .Proposal__Icons {
-    width: 16px;
-    height: 16px;
+    width: 15px;
+    height: 12px;
     display: inline-block;
+    margin-right: 8px;
 }
 .Proposal__IconsValue {
     display: inline-block;
     margin: 0;
+    font-size: 16px;
+}
+
+.Proposal__MoreDetails {
+    font-size: 14px;
+    color: #63B995;
+    font-weight: 700;
+}
+
+.Proposal__ButtonGrid {
+    display: flex;
+    align-items: flex-end;
 }
 
 .button__Proposals {
@@ -74,3 +89,32 @@
     width: 150px;
     margin-bottom: 10px;
 }
+
+.More__Details {
+    padding-top: 20px;
+}
+
+.More__DetailsGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 150px);
+    grid-auto-rows: 30px;
+    background-color: #fff;
+    margin: 0px 20px;
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.More__DetailsTitle {
+    font-weight: 700;
+}
+
+.More__DetailsContent {
+    font-size: 12px;
+}
+
+.More__DetailsLine {
+    width: 100%;
+    border: 0.5px solid #d3d3d3;
+}
+

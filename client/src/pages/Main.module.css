@@ -185,10 +185,13 @@ Buttons Section
     outline: none;
     color: #000;
     border-radius: 4px;
-    width: 99%;
+    width: 90%;
+    padding-left: 10px;
 }
+
+
 
 .Search__PickupDateItem::placeholder {
     color: #000;
-    padding-left: 10px;
+    padding-left: 20px;
 }

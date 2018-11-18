@@ -1,10 +1,33 @@
 .Navbar {
     position: relative;
-    background-color: #3D405B;
+    margin-bottom: 30px;
+    background: #000;
+    width: 100vw;
+    height: 60px;
+}
+
+.Navbar__Flex {
+    display: flex;
+    justify-content: space-between;
+}
+
+.Navbar__Logo {
+    height: 46px;
+    width: 46px;
+    padding: 4px 10px;
 }
 
 .Navbar__Title {
     margin: 0px;
-    background-color: #3D405B;
+    color: #fff;
+    font-weight: 700;
+    line-height: 50px;
+    padding-left: 10px;
+}
 
+.Navbar__Avatar {
+    height: 40px;
+    width: 40px;
+    line-height: 50px;
+    padding: 5px 10px;
 }
