@@ -52,6 +52,26 @@
     margin-top: 5px;
 }
 
+.Proposal__CardPrice {
+    font-weight: 700;
+    text-align: right;
+    padding-right: 10px;
+    font-size: 14px;
+    margin: 0;
+    margin-top: 5px;
+}
+
+.Proposal__CardPriceTotal {
+    max-width: 250px;
+    margin: auto;
+    text-align: right;
+    padding-top: 19px;
+}
+
+.Proposal__CardPriceTotal_Margin {
+    margin-right: 20px;
+}
+
 .Proposal__CardInnerGrid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);

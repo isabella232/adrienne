@@ -27,14 +27,15 @@
     color: #fff;
     font-weight: 700;
     padding-right: 20px;
+    vertical-align: top;
+    padding: 36px 10px;
 }
 
 .Navbar__Avatar {
-    height: 40px;
-    width: 40px;
-    padding: 5px 10px;
-    position: relative;
-    z-index: 10;
+    height: 46px;
+    width: 46px;
+    vertical-align: top;
+    padding: 20px 10px;
 }
 
 .inline {
