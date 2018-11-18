@@ -126,55 +126,6 @@ class Main extends Component {
         return allResults;
     }
 
-    /**
-     * transfer from user to escrow
-     * @param {string} toAccount the account address
-     * @param {integer} amount amount of coins to transfer
-     */
-    async proceedEscrow(toAccount, amount) {
-        const { web3, accounts, escrowContract } = this.state;
-        try {
-            await escrowContract.escrow(toAccount, amount, { from: accounts[0] });
-            const paymentFilter = web3.eth.filter('latest');
-            paymentFilter.watch((error, log) => {
-                if (error) {
-                    console.log('An error ocurred!');
-                } else {
-                    console.log('In Escrow!');
-                }
-                console.log(log);
-                paymentFilter.stopWatching();
-            });
-        } catch (error) {
-            //
-        }
-    }
-
-    /**
-     * transfer from escrow to final user
-     * @param {string} toAccount the account address
-     * @param {integer} amount amount of coins to transfer
-     */
-    async finishEscrow(toAccount, amount) {
-        const { web3, accounts, escrowContract } = this.state;
-        try {
-            await escrowContract.finish(toAccount, amount, { from: accounts[0] });
-            const paymentFilter = web3.eth.filter('latest');
-            paymentFilter.watch((error, log) => {
-                if (error) {
-                    console.log('An error ocurred!');
-                } else {
-                    console.log('In Escrow!');
-                }
-                console.log(log);
-                paymentFilter.stopWatching();
-            });
-        } catch (error) {
-            //
-        }
-    }
-
-
     handleChange(event) {
         const { vehicleBodyType } = this.state;
         this.setState({ [event.target.name]: event.target.value });

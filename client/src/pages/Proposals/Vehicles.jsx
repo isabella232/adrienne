@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import request from 'request';
 import url from 'url';
-import truffleContract from 'truffle-contract';
 import getWeb3 from '../../utils/getWeb3';
-import EscrowContract from '../../contracts/Escrow.json';
-import EuroCoinContract from '../../contracts/EuroCoin.json';
 
 import '../Main.module.css';
 import './Proposals.module.css';
@@ -17,105 +14,66 @@ import carDoorImg from '../../assets/car-door.svg';
 import energyImg from '../../assets/bold.svg';
 
 
-// eslint-disable-next-line react/no-multi-comp
-class Proposals extends Component {
+class Vehicle extends Component {
     constructor() {
         super();
         this.state = {
-            web3: null,
-            accounts: null,
-            escrowContract: null,
-            euroCoinContract: null,
-            carsResult: [],
             isHidden: false,
             showButtons: false,
-            done: false,
         };
+
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    async componentDidMount() {
+    /**
+     * transfer from user to escrow
+     * @param {string} toAccount the account address
+     * @param {integer} amount amount of coins to transfer
+     */
+    async proceedEscrow(toAccount, amount) {
+        const { web3, accounts, escrowContract } = this.state;
         try {
-            const web3 = await getWeb3();
-            const accounts = await web3.eth.getAccounts();
-
-            // Get the contract instance.
-            const Contract = truffleContract(EscrowContract);
-            Contract.setProvider(web3.currentProvider);
-            const escrowContract = await Contract.deployed();
-            // Get the contract instance.
-            const ContractCoin = truffleContract(EuroCoinContract);
-            ContractCoin.setProvider(web3.currentProvider);
-            const euroCoinContract = await ContractCoin.deployed();
-
-            console.log('window.ethereum', window.ethereum);
-
-            // window.ethereum.enable();
-
-            const { done } = this.state;
-            if (window.location.href.indexOf('proposals?to=') > -1 && done === false) {
-                // eslint-disable-next-line no-undef
-                const parts = url.parse(window.location.href, true);
-                const { to, price } = parts.query;
-
-
-                await escrowContract.escrow(to, price, { from: accounts[0] });
-                const paymentFilter = web3.eth.filter('latest');
-                paymentFilter.watch((error, log) => {
-                    if (error) {
-                        console.log('An error ocurred!');
-                    } else {
-                        console.log('In Escrow!');
-                    }
-                    console.log(log);
-                    paymentFilter.stopWatching();
-                });
-            } else if (window.location.href.indexOf('proposals?finishto=') > -1 && done === false) {
-                // eslint-disable-next-line no-undef
-                const parts = url.parse(window.location.href, true);
-                const { finishto, price } = parts.query;
-
-
-                await escrowContract.finish(finishto, price, { from: accounts[0] });
-                const paymentFilter = web3.eth.filter('latest');
-                paymentFilter.watch((error, log) => {
-                    if (error) {
-                        console.log('An error ocurred!');
-                    } else {
-                        console.log('In Escrow!');
-                    }
-                    console.log(log);
-                    paymentFilter.stopWatching();
-                });
-            }
-        } catch (error) {
-            console.log('Failed to load web3, accounts, or contract. Check console for details.');
-            console.log(error);
-        }
-
-        // eslint-disable-next-line no-undef
-        const parts = url.parse(window.location.href, true);
-        const { type, make, model } = parts.query;
-
-        request.post({
-            url: 'http://localhost:3001/search-vehicles',
-            form: {
-                type, make, model,
-            },
-        }, (err, httpResponse, body) => {
-            if (httpResponse.statusCode === 200) {
-                const jsonObject = JSON.parse(body);
-                const elements = jsonObject.length;
-                const carsResult = [];
-                for (let e = 0; e < elements; e += 1) {
-                    carsResult.push(jsonObject[e]);
+            await escrowContract.escrow(toAccount, amount, { from: accounts[0] });
+            const paymentFilter = web3.eth.filter('latest');
+            paymentFilter.watch((error, log) => {
+                if (error) {
+                    console.log('An error ocurred!');
+                } else {
+                    console.log('In Escrow!');
                 }
-                console.log(carsResult);
-                this.setState({ carsResult });
-            }
-        });
+                console.log(log);
+                paymentFilter.stopWatching();
+            });
+        } catch (error) {
+            //
+        }
     }
 
+    /**
+     * transfer from escrow to final user
+     * @param {string} toAccount the account address
+     * @param {integer} amount amount of coins to transfer
+     */
+    async finishEscrow(toAccount, amount) {
+        const { web3, accounts, escrowContract } = this.state;
+        try {
+            await escrowContract.finish(toAccount, amount, { from: accounts[0] });
+            const paymentFilter = web3.eth.filter('latest');
+            paymentFilter.watch((error, log) => {
+                if (error) {
+                    console.log('An error ocurred!');
+                } else {
+                    console.log('In Escrow!');
+                }
+                console.log(log);
+                paymentFilter.stopWatching();
+            });
+        } catch (error) {
+            //
+        }
+    }
 
+    // Toggle the visibility
     toggleHidden() {
         const { isHidden } = this.state;
         this.setState({
@@ -123,16 +81,75 @@ class Proposals extends Component {
         });
     }
 
-    // eslint-disable-next-line class-methods-use-this
-    async handleSubmit(event) {
-        const priceToPay = 50000000000000;
+    async finishButton() {
+        const { accounts } = this.state;
+        // eslint-disable-next-line react/prop-types
+        const { data } = this.props;
+        const priceToPay = data.price;
         const dummyAccount = '0x5aeda56215b167893e80b4fe645ba6d5bab767de';
-        window.location = `proposals?to=${dummyAccount}&price=${priceToPay}`;
-        console.log(event);
+        await this.finishEscrow(dummyAccount, priceToPay, { from: accounts[0] });
+    }
+
+    async bookButton() {
+        const { accounts } = this.state;
+        // eslint-disable-next-line react/prop-types
+        const { data } = this.props;
+        const priceToPay = data.price;
+        const dummyAccount = '0x5aeda56215b167893e80b4fe645ba6d5bab767de';
+        await this.proceedEscrow(dummyAccount, priceToPay, { from: accounts[0] });
+        this.setState({ showButtons: true });
+    }
+
+    async handleSubmit(event) {
+        const { showButtons } = this.state;
+        const { web3, accounts, escrowContract } = this.props;
+        if (showButtons === false) {
+            const { data } = this.props;
+            console.log('3');
+            const priceToPay = data.price;
+            const dummyAccount = '0x5aeda56215b167893e80b4fe645ba6d5bab767de';
+
+
+            console.log(escrowContract);
+            try {
+                //await escrowContract.escrow(dummyAccount, priceToPay, { from: accounts[0] });
+                /*const paymentFilter = web3.eth.filter('latest');
+                paymentFilter.watch((error, log) => {
+                    if (error) {
+                        console.log('An error ocurred!');
+                    } else {
+                        console.log('In Escrow!');
+                    }
+                    console.log(log);
+                    paymentFilter.stopWatching();
+                });*/
+            } catch (error) {
+                //
+            }
+
+            //await this.proceedEscrow(dummyAccount, priceToPay, { from: accounts[0] });
+            //this.setState({ showButtons: true });
+            /**
+             * console.log('1');
+            console.log('2');
+            // eslint-disable-next-line react/prop-types
+            console.log('4');
+             */
+        }
+        console.log(event.target);
         event.preventDefault();
     }
 
-    renderVehicle(data) {
+    render() {
+        // eslint-disable-next-line react/prop-types
+        const { web3 } = this.props;
+        if (web3 === null) {
+            return <div>Loading Web3, accounts, and contract...</div>;
+        }
+
+        // eslint-disable-next-line react/prop-types
+        const { data } = this.props;
+
         const services = data.services.map(service => (
             <div className="More__DetailsGrid">
                 <div>
@@ -144,13 +161,12 @@ class Proposals extends Component {
                 <div>
                     <p className="More__DetailsContent">{service.serviceFee}</p>
                 </div>
-                <div>
-                    <p className="More__DetailsContent">{Math.floor(service.serviceFee)} Days ago</p>
-                </div>
             </div>
         ));
 
         return (
+
+
             <div className="Proposal__Card">
                 <p className="Proposal__Title">
                     {data.make}
@@ -211,36 +227,17 @@ class Proposals extends Component {
                             <p className="More__DetailsTitle inline">Service</p>
                             <p className="More__DetailsTitle inline">Provider</p>
                             <p className="More__DetailsTitle inline">Cost</p>
-                            <p className="More__DetailsTitle inline">Date</p>
                         </div>
 
                         <div>{services}</div>
-                        <div className="Proposal__CardPriceTotal">
-                            <span className="Proposal__CardPriceTotal_Margin">Total: </span>
-                            {data.price}
-                        </div>
 
                     </div>
 
                 ) : null}
-            </div>);
-    }
-
-    render() {
-        const {
-            carsResult,
-        } = this.state;
-        let resultsToShow;
-        if (carsResult.length > 0) {
-            resultsToShow = this.renderVehicle(carsResult[0]);
-        }
-        return (
-            <div className="Search__Container Proposal__Container">
-                <h1 className="Search__Title Search__Title_Padding">Proposals</h1>
-                {resultsToShow}
             </div>
+
         );
     }
 }
 
-export default Proposals;
+export default Vehicle;
