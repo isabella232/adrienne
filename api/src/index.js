@@ -35,17 +35,19 @@ function initDatabase() {
         { id: "6", description: "Classic" },
         { id: "7", description: "Van" },
         { id: "8", description: "Truck" },
-        { id: "9", description: "Bus" }
+        { id: "9", description: "Bus" },
+        { id: "10", description: "Scooter" },
+        { id: "11", description: "Motorbike" }
     ]);
     mongoDB.db(databaseName).collection("Vehicle_Extras").insertMany([
         // MongoDB adds the _id field with an ObjectId if _id is not present
-        { id: "1", description: "Navigation System" },
+        { id: "1", description: "Chauffeur" },
         { id: "2", description: "Snow Chains" },
         { id: "3", description: "Toddler Safety Seat" },
         { id: "4", description: "Baby Safety Seat" },
         { id: "5", description: "Child Safety Seat" },
         { id: "6", description: "Cross Border Fee" },
-        { id: "7", description: "GPS" },
+        { id: "7", description: "Navigation System" },
         { id: "8", description: "Wifi Hotspot" }
     ]);
     mongoDB.db(databaseName).collection("Vehicles").insertMany([
@@ -273,7 +275,7 @@ function initDatabase() {
         //trucks
         {
             id: "11",
-            type: "9",
+            type: "8",
             picture: "https://www.coches.com/fotos_historicas/mercedes/Vito-Mixto-W639-2014/high_mercedes_vito-mixto-w639-2014_r6.jpg",
             make: "Mercedes",
             model: "Vito",
@@ -296,7 +298,7 @@ function initDatabase() {
         },
         {
             id: "12",
-            type: "9",
+            type: "8",
             picture: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Nissan_NV200_Vanette_Van_001.JPG/1200px-Nissan_NV200_Vanette_Van_001.JPG",
             make: "Nissan",
             model: "NV200",
@@ -319,7 +321,7 @@ function initDatabase() {
         },
         {
             id: "9",
-            type: "2",
+            type: "8",
             picture: "http://images.autojini.net/AJC/50424/vehicles/4609536_395844E9-E95A-0355-D03475840352D4C2_x.jpg",
             make: "Ford",
             model: "Transit",
