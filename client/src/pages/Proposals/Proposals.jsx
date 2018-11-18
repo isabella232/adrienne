@@ -31,6 +31,7 @@ class Vehicle extends Component {
     }
 
     handleSubmit(event) {
+        //TODO: send money to escrow
         console.log('A name was submitted: ' + this.state.value);
         event.preventDefault();
 
