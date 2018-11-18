@@ -22,7 +22,6 @@ MongoClient.connect(url, function (err, database) {
     console.log("Database created!");
     mongoDB = database;
     //initDatabase();
-    console.log("Database populated with baseline data!");
 });
 
 function initDatabase() {
@@ -207,8 +206,8 @@ function initDatabase() {
             id: "7",
             type: "2",
             picture: "https://cdn.vox-cdn.com/uploads/chorus_image/image/50500495/2120x920_MS-RedSunset.0.png",
-            make: "Model S",
-            model: "Tesla",
+            make: "Tesla",
+            model: "Model S",
             date: "2016",
             doors: "5",
             fuel: "Electric",
@@ -343,6 +342,7 @@ function initDatabase() {
                 ]
         }
     ]);
+    console.log("Database populated with baseline data!");
     //mongoDB.close();
 }
 
@@ -409,12 +409,13 @@ app.post('/search-vehicles', (request, response) => {
     const { type, make, model } = request.body;
     let requestData = {};
     requestData.type = type;
-    if (make !== undefined && make !== "") {
+    if (make !== undefined && make !== "" && make !== "0") {
         requestData.make = make;
     }
-    if (model !== undefined && model !== "") {
+    if (model !== undefined && model !== "" && model !== "0") {
         requestData.model = model;
     }
+    console.log("requestData type = " + requestData.type + " | make = " + requestData.make + " | model = " + requestData.model);
     mongoDB.db(databaseName).collection("Vehicles").find(requestData).toArray(function (err, docs) {
         var data = docs;
         response.send(data);
