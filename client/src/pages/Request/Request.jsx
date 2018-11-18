@@ -28,8 +28,6 @@ class Request extends Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleSubmit2 = this.handleSubmit2.bind(this);
-
 
         this.selectedCheckboxes = new Set();
     }
@@ -65,8 +63,18 @@ class Request extends Component {
 
     // eslint-disable-next-line class-methods-use-this
     handleSubmit(event) {
+        const { vehicleBodyType, vehicleMake, vehicleModel } = this.state;
+
+        // eslint-disable-next-line no-restricted-syntax
+        for (const checkbox of this.selectedCheckboxes) {
+            console.log(checkbox, 'is selected.');
+        }
+
+        const builtURL = `http://localhost:3000/proposals?type=${
+            vehicleBodyType}&make=${vehicleMake}&model=${vehicleModel}`;
+
         // eslint-disable-next-line no-undef
-        window.location = 'http://localhost:3000/proposals?type=2&make=toyota&model=prius';
+        window.location = builtURL;
         event.preventDefault();
     }
 
@@ -111,18 +119,6 @@ class Request extends Component {
                 }
             });
         }
-    }
-
-    handleSubmit2(event) {
-        const { vehicleBodyType } = this.state;
-        console.log(`A name was submitted: ${vehicleBodyType}`);
-
-        // eslint-disable-next-line no-restricted-syntax
-        for (const checkbox of this.selectedCheckboxes) {
-            console.log(checkbox, 'is selected.');
-        }
-
-        event.preventDefault();
     }
 
     // eslint-disable-next-line class-methods-use-this
@@ -182,7 +178,7 @@ class Request extends Component {
         return (
             <div>
                 <div className="Search__Container Search__Container_HeightRequest">
-                    <form className="Search__Form" onSubmit={this.handleSubmit2}>
+                    <form className="Search__Form" onSubmit={this.handleSubmit}>
 
                         {/* Option Vehicle Section */}
                         <p className="Search__Title">Vehicle</p>
