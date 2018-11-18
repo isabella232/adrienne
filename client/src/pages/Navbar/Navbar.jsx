@@ -12,8 +12,8 @@ const Navbar = () => (
                 <img className="Navbar__Logo" src={Logo} alt="logo" />
             </div>
             <div>
-                <p className="Navbar__Title inline">Hello User</p>
-                <p className="Navbar__Title inline">Wallet</p>
+                <p className="Navbar__Title inline">Hello Alberto</p>
+                <p className="Navbar__Title inline">Balance : </p>
             </div>
         </div>
     </div>

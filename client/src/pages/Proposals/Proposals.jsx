@@ -31,11 +31,11 @@ class Vehicle extends Component {
     }
 
     handleSubmit(event) {
-        //TODO: send money to escrow
-        console.log('A name was submitted: ' + this.state.value);
+        // TODO: send money to escrow
+        console.log(`A name was submitted: ${this.state.value}`);
         event.preventDefault();
-
     }
+
     toggleHiddenButton() {
         this.setState({
             showButtons: !this.state.showButtons,
@@ -47,7 +47,7 @@ class Vehicle extends Component {
         const { data } = this.props;
 
         const services = data.services.map(service => (
-            <div>
+            <div className="More__DetailsGrid">
                 <div>
                     <p className="More__DetailsContent">{service.serviceType}</p>
                 </div>
@@ -113,27 +113,21 @@ class Vehicle extends Component {
                     ) : null}
                 </div>
                 <form onSubmit={this.handleSubmit}>
-                    <input type="submit" value="Submit" />
+                    <input type="submit" value="BOOK" className="Button button__Proposals" onClick={() => this.toggleHiddenButton()} />
                 </form>
-                <button type="button" className="Button button__Proposals">BOOK</button>
 
-                <button type="button" className="Button button__Proposals" onClick={() => this.toggleHiddenButton()}>BOOK</button>
 
                 {this.state.isHidden === true ? (
                     // {/* More Details section */}
                     <div className="More__Details">
                         <div className="More__DetailsGrid">
-                            <div>
-                                <p className="More__DetailsTitle">Service</p>
-                            </div>
-                            <div>
-                                <p className="More__DetailsTitle">Provider</p>
-                            </div>
-                            <div>
-                                <p className="More__DetailsTitle">Cost</p>
-                            </div>
-                            {services}
+                            <p className="More__DetailsTitle inline">Service</p>
+                            <p className="More__DetailsTitle inline">Provider</p>
+                            <p className="More__DetailsTitle inline">Cost</p>
                         </div>
+
+                        <div>{services}</div>
+
                     </div>
 
                 ) : null}
@@ -163,18 +157,18 @@ class Proposals extends Component {
                 type, make, model,
             },
         },
-            (err, httpResponse, body) => {
-                if (httpResponse.statusCode === 200) {
-                    const jsonObject = JSON.parse(body);
-                    const elements = jsonObject.length;
-                    const carsResult = [];
-                    for (let e = 0; e < elements; e += 1) {
-                        carsResult.push(jsonObject[e]);
-                    }
-                    console.log(carsResult);
-                    this.setState({ carsResult });
+        (err, httpResponse, body) => {
+            if (httpResponse.statusCode === 200) {
+                const jsonObject = JSON.parse(body);
+                const elements = jsonObject.length;
+                const carsResult = [];
+                for (let e = 0; e < elements; e += 1) {
+                    carsResult.push(jsonObject[e]);
                 }
-            });
+                console.log(carsResult);
+                this.setState({ carsResult });
+            }
+        });
     }
 
     render() {

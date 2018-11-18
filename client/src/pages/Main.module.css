@@ -135,7 +135,7 @@ Buttons Section
 }
 
 .Button:active {
-    background: rgba(99, 185, 149, 0.7);
+    background: rgba(0, 0, 0, 0.3);
 }
 
 .Button__Publish {
