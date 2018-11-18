@@ -4,6 +4,8 @@ import truffleContract from 'truffle-contract';
 import ServiceStorageContract from '../contracts/ServiceStorage.json';
 import EscrowContract from '../contracts/Escrow.json';
 import getWeb3 from '../utils/getWeb3';
+// eslint-disable-next-line
+import Checkbox from '../components/Checkbox';
 
 
 import './Main.module.css';
@@ -15,14 +17,15 @@ class Main extends Component {
             web3: null,
             accounts: null,
             contractService: null,
-<<<<<<< Updated upstream
             escrowContract: null,
             bodyType: undefined,
-=======
-            euroCoin: null,
-            escrowContract: null,
->>>>>>> Stashed changes
+            vehicleBodyType: 'select',
         };
+
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+
+        this.selectedCheckboxes = new Set();
     }
 
 
@@ -53,14 +56,14 @@ class Main extends Component {
         }
 
         request('http://localhost:3001/vehicle-body-options',
-            (error, response, body) => {
+            (error, response) => {
                 const x = JSON.parse(response.body);
                 this.setState({ bodyType: x });
                 console.log(response.body);
             });
 
         request('http://localhost:3001/vehicle-extras-options',
-            (error, response, body) => {
+            (error, response) => {
                 const x = JSON.parse(response.body);
                 this.setState({ extras: x });
                 console.log(response.body);
@@ -167,23 +170,60 @@ class Main extends Component {
         }
     }
 
-    render() {
-        let bodyTypeOptions = '';
-        if (this.state.bodyType !== undefined) {
-            bodyTypeOptions = this.state.bodyType.map(x => <option key={x.id}>{x.description}</option>);
+
+    handleChange(event) {
+        this.setState({ [event.target.name]: event.target.value });
+    }
+
+    handleSubmit(event) {
+        const { vehicleBodyType } = this.state;
+        console.log(`A name was submitted: ${vehicleBodyType}`);
+
+        // eslint-disable-next-line no-restricted-syntax
+        for (const checkbox of this.selectedCheckboxes) {
+            console.log(checkbox, 'is selected.');
         }
 
+        event.preventDefault();
+    }
+
+    // eslint-disable-next-line class-methods-use-this
+    toggleCheckbox(label, selected) {
+        if (selected.has(label)) {
+            selected.delete(label);
+        } else {
+            selected.add(label);
+        }
+    }
+
+    render() {
+        const {
+            web3,
+            vehicleBodyType,
+            bodyType,
+            extras,
+        } = this.state;
+
+        let bodyTypeOptions = '';
         let extraOptions = '';
-        if (this.state.extras !== undefined) {
-            extraOptions = this.state.extras.map(x => (
+
+        if (bodyType !== undefined) {
+            bodyTypeOptions = bodyType.map(x => <option value={x.id}>{x.description}</option>);
+        }
+
+        if (extras !== undefined) {
+            extraOptions = extras.map(x => (
                 <li key={x.id} className="Extras__Item">
-                    <input className="Extras__Checkbox" type="checkbox" />
-                    <div className="Extras__Text">{x.description}</div>
+                    <Checkbox
+                        label={x.description}
+                        selected={this.selectedCheckboxes}
+                        handleCheckboxChange={this.toggleCheckbox}
+                        key={x.description}
+                    />
                 </li>
             ));
         }
 
-        const { web3 } = this.state;
         if (!web3) {
             return <div>Loading Web3, accounts, and contract...</div>;
         }
@@ -191,7 +231,7 @@ class Main extends Component {
         return (
             <div>
                 <div className="Search__Container">
-                    <form className="Search__Form">
+                    <form className="Search__Form" onSubmit={this.handleSubmit}>
 
                         {/* Option Service Section */}
                         <p className="Search__Title">Service</p>
@@ -203,8 +243,13 @@ class Main extends Component {
                         <p className="Search__Title">Vehicle</p>
                         <div className="Search__LabelGrid">
                             <div>
-                                <select className="Search__Label_FullWidth">
-                                    <option className="Search__Option_FullWidth">Body Type</option>
+                                <select
+                                    className="Search__Label_FullWidth"
+                                    name="vehicleBodyType"
+                                    value={vehicleBodyType}
+                                    onChange={this.handleChange}
+                                >
+                                    <option value="select" className="Search__Option_FullWidth">Body Type</option>
                                     {bodyTypeOptions}
                                 </select>
                             </div>
@@ -235,7 +280,9 @@ class Main extends Component {
                             </ul>
                         </div>
 
-                        <button type="button" className="Button Button__Publish">PUBLISH</button>
+                        <input type="submit" className="Button Button__Publish" value="PUBLISH" />
+                        {/* <button type="button" className="Button
+                     Button__Publish">PUBLISH</button> */}
                     </form>
                     <div className="Search__BottomPadding" />
                 </div>
