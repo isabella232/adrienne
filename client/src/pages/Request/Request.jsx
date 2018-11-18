@@ -219,7 +219,7 @@ class Request extends Component {
                         </div>
 
                         {/* Pickup Section */}
-                        <p className="Search__Title">Pick Up</p>
+                        <p className="Search__Title">Starting Point</p>
                         <div className="Search__PickupGrid">
                             <div>
                                 <input className="Search__PickupInput" placeholder="Lisbon" />
@@ -248,7 +248,7 @@ class Request extends Component {
 
 
                         {/* Return Section */}
-                        <p className="Search__Title">Return</p>
+                        <p className="Search__Title">Destination</p>
                         <div className="Search__PickupGrid">
                             <div>
                                 <input className="Search__PickupInput" placeholder="Lisbon" />

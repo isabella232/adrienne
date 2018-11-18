@@ -49,7 +49,7 @@ class Navbar extends Component {
                         <p className="Navbar__Title inline">
                             {balance}
                             {' '}
-                            COINS
+                            EUROS
                         </p>
                         <p className="Navbar__Title inline">Hello Alberto</p>
                         <div className="inline">

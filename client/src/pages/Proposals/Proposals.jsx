@@ -43,6 +43,7 @@ class Vehicle extends Component {
     }
 
     render() {
+
         // eslint-disable-next-line react/prop-types
         const { data } = this.props;
 
@@ -56,6 +57,9 @@ class Vehicle extends Component {
                 </div>
                 <div>
                     <p className="More__DetailsContent">{service.serviceFee}</p>
+                </div>
+                <div>
+                    <p className="More__DetailsContent">{Math.floor(service.serviceFee)} Days ago</p>
                 </div>
             </div>
         ));
@@ -130,6 +134,7 @@ class Vehicle extends Component {
                             <p className="More__DetailsTitle inline">Service</p>
                             <p className="More__DetailsTitle inline">Provider</p>
                             <p className="More__DetailsTitle inline">Cost</p>
+                            <p className="More__DetailsTitle inline">Date</p>
                         </div>
 
                         <div>{services}</div>
