@@ -2,7 +2,7 @@ import React from 'react';
 
 import './Navbar.module.css';
 
-import avatarImg from '../../assets/avatar.svg';
+// import avatarImg from '../../assets/avatar.svg';
 import Logo from '../../assets/AdrienneLogo.png';
 
 const Navbar = () => (
@@ -13,9 +13,7 @@ const Navbar = () => (
             </div>
             <div>
                 <p className="Navbar__Title inline">Hello User</p>
-                <div className="Navbar__Avatar inline">
-                    <img src={avatarImg} alt="avatar" />
-                </div>
+                <p className="Navbar__Title inline">Wallet</p>
             </div>
         </div>
     </div>
