@@ -409,10 +409,10 @@ app.post('/search-vehicles', (request, response) => {
     const { type, make, model } = request.body;
     let requestData = {};
     requestData.type = type;
-    if (make !== undefined) {
+    if (make !== undefined && make !== "") {
         requestData.make = make;
     }
-    if (model !== undefined) {
+    if (model !== undefined && model !== "") {
         requestData.model = model;
     }
     mongoDB.db(databaseName).collection("Vehicles").find(requestData).toArray(function (err, docs) {
