@@ -18,6 +18,8 @@ class Request extends Component {
         };
         this.handleChangeStart = this.handleChangeStart.bind(this);
         this.handleChangeEnd = this.handleChangeEnd.bind(this);
+
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
 
@@ -49,6 +51,13 @@ class Request extends Component {
         });
     }
 
+    // eslint-disable-next-line class-methods-use-this
+    handleSubmit(event) {
+        // eslint-disable-next-line no-undef
+        window.location = 'http://localhost:3000/proposals?type=2&make=toyota&model=prius';
+        event.preventDefault();
+    }
+
     render() {
         const {
             bodyType,
@@ -74,7 +83,7 @@ class Request extends Component {
         return (
             <div>
                 <div className="Search__Container Search__Container_HeightRequest">
-                    <form className="Search__Form">
+                    <form className="Search__Form" onSubmit={this.handleSubmit}>
 
                         {/* Option Vehicle Section */}
                         <p className="Search__Title">Vehicle</p>
@@ -164,7 +173,13 @@ class Request extends Component {
                             </ul>
                         </div>
 
-                        <button type="button" className="Button Button__Publish">REQUEST</button>
+                        <input
+                            type="submit"
+                            className="Button Button__Publish"
+                            value="REQUEST"
+                        />
+                        {/* <button type="button" className="
+                    Button Button__Publish">REQUEST</button> */}
                     </form>
                     <div className="Search__BottomPadding" />
                 </div>

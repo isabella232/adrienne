@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import request from 'request';
+import url from 'url';
 
 import '../Main.module.css';
 import './Proposals.module.css';
@@ -17,6 +19,7 @@ class Vehicle extends Component {
         this.state = {
             isHidden: false,
         };
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     // Toggle the visibility
@@ -26,56 +29,82 @@ class Vehicle extends Component {
         });
     }
 
+    handleSubmit(event) {
+        console.log('A name was submitted: ' + this.state.value);
+        event.preventDefault();
+    }
+
     render() {
+        // eslint-disable-next-line react/prop-types
+        const { data } = this.props;
+
+        const services = data.services.map(service => (
+            <div>
+                <div>
+                    <p className="More__DetailsContent">{service.serviceType}</p>
+                </div>
+                <div>
+                    <p className="More__DetailsContent">{service.serviceProvider}</p>
+                </div>
+                <div>
+                    <p className="More__DetailsContent">{service.serviceFee}</p>
+                </div>
+            </div>
+        ));
+
         return (
 
 
             <div className="Proposal__Card">
                 <p className="Proposal__Title">
-                        Renault Clio
-                    <span className="Proposal__Title_Small"> or similiar</span>
+                    {data.make}
+                    {' '}
+                    {data.model}
                 </p>
                 <div className="Proposal__Underline" />
 
                 <div className="Proposal__CardGrid">
-                    <img className="Proposal__Image" alt="img" src="https://img00.deviantart.net/3940/i/2017/225/9/1/mercedes_car_on_a_transparent_background__by_prussiaart-dbjwmg9.png" />
+                    <img className="Proposal__Image" alt="img" src={data.picture} />
                     <div>
                         <p className="Proposal__CardTitle">Mileage Unlimited</p>
                         <p className="Proposal__CardSubtitle">Minimum Age 18 years</p>
                         <div className="Proposal__CardInnerGrid">
                             <div>
                                 <img className="Proposal__Icons" src={usersImg} alt="users" />
-                                <p className="Proposal__IconsValue">5</p>
+                                <p className="Proposal__IconsValue">{data.doors}</p>
                             </div>
                             <div>
                                 <img className="Proposal__Icons" src={transmissionImg} alt="transmission" />
-                                <p className="Proposal__IconsValue">5</p>
+                                <p className="Proposal__IconsValue">{data.driving}</p>
                             </div>
                             <div>
                                 <img className="Proposal__Icons" src={suitcaseImg} alt="suitcase" />
-                                <p className="Proposal__IconsValue">5</p>
+                                <p className="Proposal__IconsValue">2</p>
                             </div>
                             <div>
                                 <img className="Proposal__Icons" src={temperatureImg} alt="temperature" />
-                                <p className="Proposal__IconsValue">5</p>
+                                <p className="Proposal__IconsValue">Yes</p>
                             </div>
                             <div>
                                 <img className="Proposal__Icons" src={carDoorImg} alt="car door" />
-                                <p className="Proposal__IconsValue">5</p>
+                                <p className="Proposal__IconsValue">{data.doors}</p>
                             </div>
                             <div>
                                 <img className="Proposal__Icons" src={energyImg} alt="car door" />
-                                <p className="Proposal__IconsValue">5</p>
+                                <p className="Proposal__IconsValue">{data.co2}</p>
                             </div>
                         </div>
 
                         <p className="Proposal__MoreDetails" onClick={() => this.toggleHidden()}>More Details ></p>
                     </div>
                 </div>
+                <form onSubmit={this.handleSubmit}>
+                    <input type="submit" value="Submit" />
+                </form>
                 <button type="button" className="Button button__Proposals">BOOK</button>
 
-                { this.state.isHidden === true ? (
-                // {/* More Details section */}
+                {this.state.isHidden === true ? (
+                    // {/* More Details section */}
                     <div className="More__Details">
                         <div className="More__DetailsGrid">
                             <div>
@@ -87,94 +116,7 @@ class Vehicle extends Component {
                             <div>
                                 <p className="More__DetailsTitle">Cost</p>
                             </div>
-
-                            {/* RENTAL */}
-                            <div>
-                                <p className="More__DetailsContent">Rental</p>
-                            </div>
-                            <div>
-                                <p className="More__DetailsContent">rentalProvider-dynamic</p>
-                            </div>
-                            <div>
-                                <p className="More__DetailsContent">rentalPrice-dynamic</p>
-                            </div>
-
-                            {/* Delivery */}
-                            <div>
-                                <p className="More__DetailsContent">Delivery</p>
-                            </div>
-                            <div>
-                                <p className="More__DetailsContent">deliveryProvider-dynamic</p>
-                            </div>
-                            <div>
-                                <p className="More__DetailsContent">deliveryPrice-dynamic</p>
-                            </div>
-
-                            {/* Extras */}
-                            <div>
-                                <p className="More__DetailsContent">Extras</p>
-                            </div>
-                            <div>
-                                <p className="More__DetailsContent">extrasProvider-dynamic</p>
-                            </div>
-                            <div>
-                                <p className="More__DetailsContent">extrasPrice-dynamic</p>
-                            </div>
-
-                            {/* Petrol Refill */}
-                            <div>
-                                <p className="More__DetailsContent">Petrol Refill</p>
-                            </div>
-                            <div>
-                                <p className="More__DetailsContent">Petrol RefillProvider-dynamic</p>
-                            </div>
-                            <div>
-                                <p className="More__DetailsContent">Petrol RefillPrice-dynamic</p>
-                            </div>
-
-                            {/* Interior Cleaning */}
-                            <div>
-                                <p className="More__DetailsContent">Interior Cleaning</p>
-                            </div>
-                            <div>
-                                <p className="More__DetailsContent">Interior CleaningProvider-dynamic</p>
-                            </div>
-                            <div>
-                                <p className="More__DetailsContent">Interior CleaningPrice-dynamic</p>
-                            </div>
-
-                            {/* Parking */}
-                            <div>
-                                <p className="More__DetailsContent">Parking</p>
-                            </div>
-                            <div>
-                                <p className="More__DetailsContent">ParkingProvider-dynamic</p>
-                            </div>
-                            <div>
-                                <p className="More__DetailsContent">ParkingPrice-dynamic</p>
-                            </div>
-
-                            {/* Insurance */}
-                            <div>
-                                <p className="More__DetailsContent">Insurance</p>
-                            </div>
-                            <div>
-                                <p className="More__DetailsContent">InsuranceProvider-dynamic</p>
-                            </div>
-                            <div>
-                                <p className="More__DetailsContent">InsurancePrice-dynamic</p>
-                            </div>
-
-                            {/* Insurance */}
-                            <div />
-                            <div>
-                                <p className="More__DetailsTitle">Total</p>
-                            </div>
-                            <div>
-                                <div className="More__DetailsLine" />
-                                <p className="More__DetailsContent">TotalPrice-dynamic</p>
-                            </div>
-
+                            {services}
                         </div>
                     </div>
 
@@ -187,12 +129,48 @@ class Vehicle extends Component {
 
 // eslint-disable-next-line react/no-multi-comp
 class Proposals extends Component {
+    constructor() {
+        super();
+        this.state = {
+            carsResult: [],
+        };
+    }
+
+    componentDidMount() {
+        // eslint-disable-next-line no-undef
+        const parts = url.parse(window.location.href, true);
+        const { type, make, model } = parts.query;
+
+        request.post({
+            url: 'http://localhost:3001/search-vehicles',
+            form: {
+                type, make, model,
+            },
+        },
+            (err, httpResponse, body) => {
+                if (httpResponse.statusCode === 200) {
+                    const jsonObject = JSON.parse(body);
+                    const elements = jsonObject.length;
+                    const carsResult = [];
+                    for (let e = 0; e < elements; e += 1) {
+                        carsResult.push(jsonObject[e]);
+                    }
+                    console.log(carsResult);
+                    this.setState({ carsResult });
+                }
+            });
+    }
+
     render() {
+        const { carsResult } = this.state;
+        let resultsToShow;
+        if (carsResult.length > 0) {
+            resultsToShow = (<Vehicle data={carsResult[0]} />);
+        }
         return (
             <div className="Search__Container Proposal__Container">
                 <h1 className="Search__Title Search__Title_Padding">Proposals</h1>
-                <Vehicle />
-                <Vehicle />
+                {resultsToShow}
             </div>
         );
     }

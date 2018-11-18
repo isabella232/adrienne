@@ -406,11 +406,14 @@ app.get('/service-selected', (request, response) => {
  * return an array of {int, string} representing {id, description}
  */
 app.post('/search-vehicles', (request, response) => {
-    const { type, make } = request.body;
+    const { type, make, model } = request.body;
     let requestData = {};
     requestData.type = type;
     if (make !== undefined) {
         requestData.make = make;
+    }
+    if (model !== undefined) {
+        requestData.model = model;
     }
     mongoDB.db(databaseName).collection("Vehicles").find(requestData).toArray(function (err, docs) {
         var data = docs;
