@@ -2,6 +2,7 @@
     "name": "ethereum",
     "version": "0.1.0",
     "private": true,
+    "engineStrict": true,
     "main": "truffle-config.js",
     "engines": {
         "node": ">=8.12.0",
@@ -12,7 +13,6 @@
         "test": "test"
     },
     "scripts": {
-        "postinstall": "check-node-version --node '>= 8.12.0' --npm '>= 6.4.0' --yarn '>= 1.10.0'",
         "dev": "truffle migrate --reset --network local_ganache",
         "test": "scripts/test.sh",
         "coverage": "SOLIDITY_COVERAGE=true scripts/test.sh",
@@ -25,7 +25,6 @@
         "lint:fix": "npm run lint:js:fix && npm run lint:sol:fix"
     },
     "dependencies": {
-        "check-node-version": "^3.2.0",
         "openzeppelin-solidity": "^2.0.0"
     },
     "devDependencies": {
