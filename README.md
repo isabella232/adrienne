@@ -1,4 +1,4 @@
-![](/home/bernardovieira/Documentos/TechHQ/GitHub/adrienne/adrienne.png)
+![](adrienne.png)
 
 Let me introduce you to [Adrienne](http://www.techhq.io/adrienne), a mobility services protocol conceived to disrupt an industry worth 2 trillion dollars and with a target market of a billion users.
 
