@@ -7,3 +7,8 @@ The 24h hours of frenzied thinking and coding at the [Mercedes-Benz Hackathon](h
 The experience of the [TechHQ](http://www.techhq.io) team in quick development of blockchain solutions, combined with our knowledge of the automotive industry was the base upon which this idea and prototype were built.
 
 The decentralization properties of blockchain technology allow the [Adrienne Protocol](http://www.techhq.io/adrienne) to break through the scale limitations of current mobility services solutions. We are building the future today.
+
+<br/>
+
+## License
+[Apache 2.0](LICENSE)

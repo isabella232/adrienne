@@ -13,6 +13,7 @@
         "test": "test"
     },
     "scripts": {
+        "postinstall": "npm-check",
         "dev": "truffle migrate --reset --network local_ganache",
         "test": "scripts/test.sh",
         "coverage": "SOLIDITY_COVERAGE=true scripts/test.sh",

@@ -1,31 +1,27 @@
-# ethereum-react-dapp-boilerplate (react)
-This is the react side of the dapp.
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1280px-React-icon.svg.png" alt="react logo" style="width:200px;"/>
+# client
+This is the client folder.
 
 ### Requirements
 * node 8.12+
 * npm 6.4+ or yarn 1.2+
 
-We recomend yarn as it's faster, securer and works offline. And obvusly because we provide a *yarn.lock* file.
+We recomend yarn as it's faster, securer and works offline. And obviously because we provide a *yarn.lock* file.
 
 ## Folder structure
 
 * public
     * there are only public static files in here, like html, css, images, icons, etc
 * src
-    * \_\_tests\_\_
-        * probably tests, not decided yet
+    * components
+        * extra components (not project related) to be reused
     * pages
         * all pages js/jsx code
     * utils
         * some util function
 
 ## Development
-**Don't forget that** it's necessary to run the backend app first. See the [readme](../ethereum/README.md) at *ethereum* folder.
+**Don't forget that** it's necessary to run the backend app first. See the [ethereum readme](../ethereum/README.md) and [api readme](../api/README.md)
 ```
 $ yarn
 $ npm run start
 ```
-
-## License
-Not yet decided.

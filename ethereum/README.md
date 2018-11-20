@@ -1,4 +1,4 @@
-# ethereum react dapp boilerplate (ethereum)
+# ethereum
 This is the code to run in ethereum.
 <img src="https://www.ethereum.org/images/logos/ETHEREUM-LOGO_PORTRAIT_Black_small.png" alt="ethereum logo" style="width:200px;"/>
 
@@ -25,6 +25,3 @@ If it's not your first time, execute only steps 2,4,7
 
 ## Development
 If you will be developing *ethereum* related code, have a look at the [wiki](http://wiki.techhq.io/doku.php#techhq_development).
-
-## License
-Not yet decided.

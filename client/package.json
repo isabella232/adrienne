@@ -10,6 +10,7 @@
         "yarn": ">= 1.10.0"
     },
     "scripts": {
+        "postinstall": "npm-check",
         "test": "react-scripts test --env=jsdom --coverage",
         "docs": "./node_modules/.bin/esdoc",
         "start": "react-scripts start",

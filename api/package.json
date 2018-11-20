@@ -10,8 +10,10 @@
         "yarn": ">= 1.10.0"
     },
     "scripts": {
+        "postinstall": "npm-check --specials=nodemon",
         "start": "node src/index.js",
-        "dev": "nodemoon src/index.js",
+        "dev": "nodemon src/index.js",
+        "docs": "./node_modules/.bin/esdoc",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "keywords": [],
@@ -20,9 +22,20 @@
         "cors": "^2.8.5",
         "express": "^4.16.4",
         "helmet": "^3.15.0",
-        "mongodb": "^3.1.10"
+        "mongodb": "^3.1.10",
+        "body-parser": "^1.18.3"
     },
     "devDependencies": {
-        "nodemon": "^1.18.6"
+        "nodemon": "^1.18.6",
+        "esdoc": "^1.1.0",
+        "esdoc-jsx-plugin": "^1.0.0",
+        "esdoc-react-plugin": "^1.0.1",
+        "esdoc-standard-plugin": "^1.0.0",
+        "eslint": "^5.6.1",
+        "eslint-config-airbnb": "^17.1.0",
+        "eslint-plugin-import": "^2.14.0",
+        "eslint-plugin-jsx-a11y": "^6.1.1",
+        "eslint-plugin-react": "^7.11.0",
+        "npm-check": "^5.9.0"
     }
 }
