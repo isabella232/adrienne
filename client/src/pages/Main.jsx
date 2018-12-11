@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import request from 'request';
-import truffleContract from 'truffle-contract';
-import ServiceStorageContract from '../contracts/ServiceStorage.json';
-import EscrowContract from '../contracts/Escrow.json';
 import getWeb3 from '../utils/getWeb3';
 // eslint-disable-next-line
 import Checkbox from '../components/Checkbox';
@@ -15,9 +12,6 @@ class Main extends Component {
         super();
         this.state = {
             web3: null,
-            accounts: null,
-            contractService: null,
-            escrowContract: null,
             bodyType: undefined,
             vehicleBodyType: 'select',
             vehicleMake: 'select',
@@ -32,27 +26,12 @@ class Main extends Component {
         this.selectedCheckboxes = new Set();
     }
 
-
     async componentDidMount() {
         try {
             const web3 = await getWeb3();
-            const accounts = await web3.eth.getAccounts();
-
-            // Get the contract instance.
-            const Contract = truffleContract(ServiceStorageContract);
-            Contract.setProvider(web3.currentProvider);
-            const instance = await Contract.deployed();
-
-            // Get the contract instance.
-            const ContractEscrow = truffleContract(EscrowContract);
-            ContractEscrow.setProvider(web3.currentProvider);
-            const instanceEscrow = await ContractEscrow.deployed();
 
             this.setState({
                 web3,
-                accounts,
-                contractService: instance,
-                escrowContract: instanceEscrow,
             });
         } catch (error) {
             console.log('Failed to load web3, accounts, or contract. Check console for details.');
@@ -72,58 +51,6 @@ class Main extends Component {
                 this.setState({ extras: x });
                 console.log(response.body);
             });
-    }
-
-    async deepSearch(serviceType, city, street) {
-        const { contractService } = this.state;
-        const results = [];
-        try {
-            let lastResult;
-            lastResult = await contractService.findService(serviceType, city, street, 0);
-            while (lastResult[0] !== 0x0) {
-                results.push(lastResult);
-                // eslint-disable-next-line no-await-in-loop
-                lastResult = await contractService
-                    .findService(serviceType, city, street, lastResult[2]);
-            }
-        } catch (error) {
-            //
-        }
-        return results;
-    }
-
-    /**
-     * this is where the magic happens!
-     * @param {array} results all the results from search
-     */
-    // eslint-disable-next-line class-methods-use-this
-    async crossSearch(results) {
-        const rental = results[0];
-        const delivery = results[1];
-        const extras = results[2];
-
-        // do somthing ... pff
-
-        const biggerSize = Math.max(rental.length, delivery.length, extras.length);
-        //
-        for (let bs = 0; bs < biggerSize; bs += 1) {
-            //
-        }
-    }
-
-    /**
-     * action after click on "search button on frontend"
-     * @param {json} jsonRequest a json object containing all the information from frontend
-     */
-    // eslint-disable-next-line class-methods-use-this
-    async search(jsonRequest) {
-        const totalServiceTypes = 3;
-        const allResults = [];
-        for (let s = 0; s < totalServiceTypes; s += 1) {
-            allResults.push(this.deepSearch(s, jsonRequest.city, jsonRequest.street));
-        }
-        this.crossSearch(allResults);
-        return allResults;
     }
 
     handleChange(event) {
