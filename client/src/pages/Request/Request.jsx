@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
 import request from 'request';
-
 import DatePicker from 'react-datepicker';
 // eslint-disable-next-line
 import Checkbox from '../../components/Checkbox';
-
 import 'react-datepicker/dist/react-datepicker.css';
-
 import '../Main.module.css';
 
 class Request extends Component {
@@ -31,7 +28,6 @@ class Request extends Component {
 
         this.selectedCheckboxes = new Set();
     }
-
 
     componentDidMount() {
         request('http://localhost:3001/vehicle-body-options',
@@ -91,7 +87,6 @@ class Request extends Component {
                     const jsonObject = JSON.parse(body);
                     const elements = jsonObject.length;
                     const makes = [];
-                    console.log(body);
                     for (let e = 0; e < elements; e += 1) {
                         makes.push(jsonObject[e].make);
                     }
@@ -111,7 +106,6 @@ class Request extends Component {
                     const jsonObject = JSON.parse(body);
                     const elements = jsonObject.length;
                     const models = [];
-                    console.log(jsonObject);
                     for (let e = 0; e < elements; e += 1) {
                         models.push(jsonObject[e].model);
                     }
@@ -129,7 +123,6 @@ class Request extends Component {
             selected.add(label);
         }
     }
-
 
     render() {
         const {

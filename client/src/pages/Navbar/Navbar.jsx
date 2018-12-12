@@ -5,7 +5,6 @@ import getWeb3 from '../../utils/getWeb3';
 
 import './Navbar.module.css';
 
-import avatarImg from '../../assets/avatar.svg';
 import Logo from '../../assets/AdrienneLogo.png';
 
 class Navbar extends Component {

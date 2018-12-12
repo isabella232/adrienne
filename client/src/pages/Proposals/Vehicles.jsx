@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import request from 'request';
-import url from 'url';
-import getWeb3 from '../../utils/getWeb3';
+import truffleContract from 'truffle-contract';
+import EscrowContract from '../../contracts/Escrow.json';
 
 import '../Main.module.css';
 import './Proposals.module.css';
@@ -18,137 +17,70 @@ class Vehicle extends Component {
     constructor() {
         super();
         this.state = {
-            isHidden: false,
-            showButtons: false,
+            showMoreDetails: false,
+            showFinalButtons: false,
+            accounts: null,
+            escrowContract: null,
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    /**
-     * transfer from user to escrow
-     * @param {string} toAccount the account address
-     * @param {integer} amount amount of coins to transfer
-     */
-    async proceedEscrow(toAccount, amount) {
-        const { web3, accounts, escrowContract } = this.state;
+    async componentDidMount() {
+        const { web3 } = this.props;
         try {
-            await escrowContract.escrow(toAccount, amount, { from: accounts[0] });
-            const paymentFilter = web3.eth.filter('latest');
-            paymentFilter.watch((error, log) => {
-                if (error) {
-                    console.log('An error ocurred!');
-                } else {
-                    console.log('In Escrow!');
-                }
-                console.log(log);
-                paymentFilter.stopWatching();
-            });
-        } catch (error) {
-            //
-        }
-    }
+            const accounts = await web3.eth.getAccounts();
 
-    /**
-     * transfer from escrow to final user
-     * @param {string} toAccount the account address
-     * @param {integer} amount amount of coins to transfer
-     */
-    async finishEscrow(toAccount, amount) {
-        const { web3, accounts, escrowContract } = this.state;
-        try {
-            await escrowContract.finish(toAccount, amount, { from: accounts[0] });
-            const paymentFilter = web3.eth.filter('latest');
-            paymentFilter.watch((error, log) => {
-                if (error) {
-                    console.log('An error ocurred!');
-                } else {
-                    console.log('In Escrow!');
-                }
-                console.log(log);
-                paymentFilter.stopWatching();
-            });
+            // Get the contract instance.
+            const Contract = truffleContract(EscrowContract);
+            Contract.setProvider(web3.currentProvider);
+            const escrowContract = await Contract.deployed();
+
+            this.setState({ accounts, escrowContract });
         } catch (error) {
-            //
+            console.log('Failed to load accounts, or contract. Check console for details.');
+            console.log(error);
         }
     }
 
     // Toggle the visibility
     toggleHidden() {
-        const { isHidden } = this.state;
+        const { showMoreDetails } = this.state;
         this.setState({
-            isHidden: !isHidden,
+            showMoreDetails: !showMoreDetails,
         });
     }
 
-    async finishButton() {
-        const { accounts } = this.state;
+    // eslint-disable-next-line class-methods-use-this
+    handleSubmit(event) {
         // eslint-disable-next-line react/prop-types
-        const { data } = this.props;
-        const priceToPay = data.price;
+        const { web3, data } = this.props;
+        const { accounts, escrowContract } = this.state;
+        // TODO: change this to get account from database.
         const dummyAccount = '0x5aeda56215b167893e80b4fe645ba6d5bab767de';
-        await this.finishEscrow(dummyAccount, priceToPay, { from: accounts[0] });
-    }
-
-    async bookButton() {
-        const { accounts } = this.state;
-        // eslint-disable-next-line react/prop-types
-        const { data } = this.props;
-        const priceToPay = data.price;
-        const dummyAccount = '0x5aeda56215b167893e80b4fe645ba6d5bab767de';
-        await this.proceedEscrow(dummyAccount, priceToPay, { from: accounts[0] });
-        this.setState({ showButtons: true });
-    }
-
-    async handleSubmit(event) {
-        const { showButtons } = this.state;
-        const { web3, accounts, escrowContract } = this.props;
-        if (showButtons === false) {
-            const { data } = this.props;
-            console.log('3');
-            const priceToPay = data.price;
-            const dummyAccount = '0x5aeda56215b167893e80b4fe645ba6d5bab767de';
-
-
-            console.log(escrowContract);
-            try {
-                //await escrowContract.escrow(dummyAccount, priceToPay, { from: accounts[0] });
-                /*const paymentFilter = web3.eth.filter('latest');
-                paymentFilter.watch((error, log) => {
-                    if (error) {
-                        console.log('An error ocurred!');
-                    } else {
-                        console.log('In Escrow!');
-                    }
-                    console.log(log);
-                    paymentFilter.stopWatching();
-                });*/
-            } catch (error) {
-                //
-            }
-
-            //await this.proceedEscrow(dummyAccount, priceToPay, { from: accounts[0] });
-            //this.setState({ showButtons: true });
-            /**
-             * console.log('1');
-            console.log('2');
-            // eslint-disable-next-line react/prop-types
-            console.log('4');
-             */
+        const amount = web3.utils.toWei(data.price, 'ether');
+        try {
+            escrowContract.escrow(
+                web3.utils.toChecksumAddress(dummyAccount),
+                amount,
+                { from: accounts[0] },
+            ).then(() => {
+                // TODO: add subscriptions!
+            });
+        } catch (error) {
+            //
         }
-        console.log(event.target);
+        this.setState({ showFinalButtons: true });
         event.preventDefault();
     }
 
     render() {
         // eslint-disable-next-line react/prop-types
-        const { web3 } = this.props;
+        const { web3, data } = this.props;
+        const { showMoreDetails, showFinalButtons } = this.state;
         if (web3 === null) {
             return <div>Loading Web3, accounts, and contract...</div>;
         }
-
-        // eslint-disable-next-line react/prop-types
-        const { data } = this.props;
 
         const services = data.services.map(service => (
             <div className="More__DetailsGrid">
@@ -165,8 +97,6 @@ class Vehicle extends Component {
         ));
 
         return (
-
-
             <div className="Proposal__Card">
                 <p className="Proposal__Title">
                     {data.make}
@@ -206,21 +136,36 @@ class Vehicle extends Component {
                                     <p className="Proposal__IconsValue">{data.co2}</p>
                                 </div>
                             </div>
-
-                            <p className="Proposal__MoreDetails" onClick={() => this.toggleHidden()}>More Details ></p>
+                            <button
+                                type="button"
+                                className="Proposal__MoreDetails"
+                                onClick={() => this.toggleHidden()}
+                            >
+                            More Details
+                                {' >'}
+                            </button>
                         </div>
-                        {this.state.showButtons === true ? (
+                        {showFinalButtons === true ? (
                             <div>
-                                <button className="Button Proposal__Button_Finish" onClick={() => this.finishButton()}>FINISH</button>
-                                <button className="Button Proposal__Button_Support">CONTACT SUPPORT</button>
+                                <button
+                                    type="button"
+                                    className="Button Proposal__Button_Finish"
+                                    onClick={() => this.finishButton()}
+                                >
+                                FINISH
+                                </button>
+                                <button
+                                    type="button"
+                                    className="Button Proposal__Button_Support"
+                                >
+                                CONTACT SUPPORT
+                                </button>
                             </div>
                         ) : null}
                     </div>
                     <input className="Button button__Proposals" value="BOOK" type="submit" />
                 </form>
-
-
-                {this.state.isHidden === true ? (
+                {showMoreDetails === true ? (
                     // {/* More Details section */}
                     <div className="More__Details">
                         <div className="More__DetailsGrid">
@@ -228,9 +173,7 @@ class Vehicle extends Component {
                             <p className="More__DetailsTitle inline">Provider</p>
                             <p className="More__DetailsTitle inline">Cost</p>
                         </div>
-
                         <div>{services}</div>
-
                     </div>
 
                 ) : null}
