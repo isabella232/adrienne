@@ -10,10 +10,10 @@
         "yarn": ">= 1.10.0"
     },
     "scripts": {
-        "postinstall": "npm-check --specials=nodemon",
+        "postinstall": "depcheck . --ignores=\"esm,esdoc-jsx-plugin,esdoc-react-plugin,esdoc-standard-plugin\"",
         "start": "node -r esm src/index.js",
         "dev": "nodemon -r esm src/index.js",
-        "docs": "./node_modules/.bin/esdoc",
+        "docs": "esdoc",
         "init": "node -r esm init/index.js",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
@@ -28,7 +28,6 @@
         "esm": "^3.0.84"
     },
     "devDependencies": {
-        "nodemon": "^1.18.6",
         "esdoc": "^1.1.0",
         "esdoc-jsx-plugin": "^1.0.0",
         "esdoc-react-plugin": "^1.0.1",
@@ -38,6 +37,7 @@
         "eslint-plugin-import": "^2.14.0",
         "eslint-plugin-jsx-a11y": "^6.1.1",
         "eslint-plugin-react": "^7.11.0",
-        "npm-check": "^5.9.0"
+        "depcheck": "^0.6.11",
+        "nodemon": "^0.1.4"
     }
 }

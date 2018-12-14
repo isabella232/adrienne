@@ -13,7 +13,7 @@
         "test": "test"
     },
     "scripts": {
-        "postinstall": "npm-check",
+        "postinstall": "depcheck . --ignores=\"esdoc,esdoc-jsx-plugin,esdoc-react-plugin,esdoc-standard-plugin,openzeppelin-solidity,ganache-cli,solidity-coverage\"",
         "dev": "truffle migrate --reset --network local_ganache",
         "test": "scripts/test.sh",
         "coverage": "SOLIDITY_COVERAGE=true scripts/test.sh",
@@ -37,7 +37,7 @@
         "eslint-plugin-jsx-a11y": "^6.1.1",
         "eslint-plugin-react": "^7.11.0",
         "ganache-cli": "6.1.8",
-        "npm-check": "^5.9.0",
+        "depcheck": "^0.6.11",
         "solidity-coverage": "^0.5.11",
         "solium": "^1.1.8",
         "truffle": "^4.1.14"
