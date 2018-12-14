@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Check proposals and it's values 1`] = `
+<div
+  className="Search__Container Proposal__Container"
+>
+  <h1
+    className="Search__Title Search__Title_Padding"
+  >
+    Proposals
+  </h1>
+</div>
+`;

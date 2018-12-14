@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Check navbar and it's values 1`] = `
+<div
+  className="Navbar"
+>
+  <div
+    className="Navbar__Flex"
+  >
+    <div
+      className="Navbar__Logo"
+    >
+      <img
+        alt="logo"
+        className="Navbar__Logo"
+        src="AdrienneLogo.png"
+      />
+    </div>
+    <div>
+      <p
+        className="Navbar__Title inline"
+      >
+        Balance: 
+      </p>
+      <p
+        className="Navbar__Title inline"
+      >
+        0
+         
+        EUROS
+      </p>
+      <p
+        className="Navbar__Title inline"
+      >
+        Hello Alberto
+      </p>
+      <div
+        className="inline"
+      >
+        <img
+          alt="avatar"
+          className="Navbar__Avatar"
+          src="https://cdn1.iconfinder.com/data/icons/user-pictures/100/boy-512.png"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;

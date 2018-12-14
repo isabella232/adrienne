@@ -13,5 +13,9 @@
             "error",
             4
         ]
+    },
+    "env": {
+        "node": true,
+        "jest": true
     }
 }
